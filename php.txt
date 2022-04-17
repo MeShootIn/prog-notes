@@ -1,0 +1,415 @@
+*** ОСНОВЫ ***
+
+
+* если в форме есть отправка файла, то в form нужно enctype="multipart/form-data"
+* if($_SERVER['REQUEST_METHOD'] == 'POST') // проверка на отправку формы
+
+* аннотации (списки):
+
+/**
+ * @param Integer $num
+ * @return NULL
+ */
+
+* полезные методы и константы (при переопределении через define() - ошибка):
+
+foreach ([[1, 2], [3, 4, 5]] as [$a, $b]) {echo $a . ' ' . $b . ", ";} // 1 2, 3 4
+foreach ($arr as $key => $value) {...} unset($key); unset($value); // правильное использование
+
+$string = 'string';
+$string[-3] = 'o'; // 'strong'
+
+"{$obj->name}"
+"{$arr['kek'][228]}"
+"{$$var_name}" // значение переменной по имени
+"{${get_var_name()}}"
+
+PHP_VERSION
+PHP_OS
+gettype($this);
+unset($arr[1]); // удаление переменной
+var_dump($arr); // + <pre>
+print_r($arr); // без подробностей (типов, длины, ...)
+var_export($var); // выводит реальное значение переменной
+
+htmlspecialchars($user_name [, int $flags]); // переводит html-спецсимволы в html сущности (&lt; и т. д.)
+htmlentities($string [, int $flags]); // переводит ВСЕ возможные сущности в html сущности (лучше, чем htmlspecialchars)
+html_entity_decode($string [, int $flags]); // flags - константы, обозначающие конкретные символы для перевода
+trim($str); // удаление пробелов, табуляций... с конца и начала строки
+stripslashes($str); // удаляет экранирование символов ("Ваc зовут O\'reilly?" => "Вас зовут O'reilly?")
+strip_tags($str, $allowable_tags); // Удаляет теги HTML и PHP из строки (strip_tags($str, ['p', 'a']))
+filter_var($str, FILTER_VALIDATE_INT / FILTER_VALIDATE_EMAIL / ...); // проверка корректности данных
+
+implode(DELIMITER, $arr)
+explode(DELIMITER, $string)
+
+string substr(string $string, int $start [, int $length])
+mb_substr(...); // многобайтовые кодировки
+mb_strlen($str [, string $encoding]); // лучше strlen, т. к. возвращает не кол-во байт, а длину строки в мб
+неизвестной кодировке
+
+int strpos(string $string, mixed $needle [, int $offset = 0])
+mb_strpos(...)
+
+$sum = array_sum($arr);
+$new_arr = array_unique($arr);
+
+
+*** ТИПЫ ДАННЫХ ***
+
+
+* Integer, Float:
+
+E - экспонента
+
+* String:
+
+' - не подставляются переменные => быстрее "
+` - оператор исполнения (echo `dir C:\\`)
+'<br>' - перенос строки
+
+* array:
+
+$arr = array(1, 2, 'key' => 'value', 3); // ключи: 0, 1, 'key', 2
+$arr = [1, 2, 'key' => 'value', 3];
+
+добавление:
+$arr[3] = 228;
+$arr[] = 228; // присваивается ключу 2 (макс. индекс) + 1
+!!! string != array
+
+
+*** ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ***
+
+
+* Значение по имени:
+
+$apples = 5;
+$fruit = 'apples';
+$GLOBALS['apples'] ИЛИ $$fruit // 5
+
+* define('pi', 3.14) - глобальная константа
+
+
+*** JSON ***
+
+
+$json_str = file_get_contents('test.json');
+$content = json_decode($json_str, true); // [, true] - в ассоциативный массив
+$json = json_encode($content); // "json" строка
+
+
+*** COOKIE ***
+
+
+* функции:
+
+добавление:
+1) setcookie('login', 'MeShootIn', time() + $lifeTime); // стирается в момент time() + $lifeTime времени
+2) setcookie('login', 'MeShootIn'); // стирается при закрытии браузера
+
+удаление:
+setcookie('login', '', 0);
+
+
+*** СЕССИИ ***
+
+
+* хранится на стороне сервера (надёжнее куки), НО 15 минут
+* все пользователи имеют уникальные сессии
+
+* работа:
+
+session_start() // начинает новую или ПРОДОЛЖАЕТ текущую сессию
+session_destroy()
+
+
+*** РЕГУЛЯРНЫЕ ВЫРАЖЕНИЯ ***
+
+
+* preg_match($pattern, $subject, $matches): int - поиск первого шаблона в строке (1 - найдена / 0)
+preg_match_all - все непересекающиеся шаблоны
+в массив $matches вставляется подстрока из $subject, подходящая под шаблон и параметры, заключённые в ()
+
+!!!
+\\\\ - 1 обратный слеш
+[а-яё]
+!!!
+
+. - любой символ, кроме перевода строки или другого разделителя строки
+[] - [0-9а-яё!_] (1 символ: 0-9 или а-я или ё или ! или _)
+() - (ab){2} - последовательность ab встречается 2 раза ("группировка")
+^ - [^ab] (любой символ, кроме a и b)
+| - /ma|pa|da/ (<=> "или", "альтернатива", обрабатываются слева направо до первого соответствия)
+/^кек/ - вся строка $subject начинается на 'кек'
+/кек$/ - вся строка $subject оканчивается на 'кек'
+\w - эквивалентно [a-zA-Z0-9_] (Любой текстовый символ ASCII)
+\W - эквивалентно [^a-zA-Z0-9_] (Любой символ кроме текстовых символов ASCII)
+\s - любой пробельный символ из Unicode
+\S - любой НЕпробельный символ из Unicode
+\d - эквивалентно [0-9] (любые цифры ASCII)
+\D - эквивалентно [^0-9] (все символы кроме цифр ASCII)
+\b - соответствует границе слова, т.е. позиции между текстовым (aA-zZ) и не-текстовым символом, либо между текстовым символом и началом или концом строки
+\B - cоответствует позиции, не являющейся границей слов
+
+* Escape-последовательности:
+\0 - Символ NUL (Соответствует \u0000 в Unicode)
+\v - Вертикальная табуляция (\u000B)
+\f - Перевод страницы (\u000C)
+\r - Возврат каретки (\u000D)
+\xnn - Символ из набора Latin, задаваемый шестнадцатиричным номером nn
+\unnnn - Символ Unicode,  задаваемый шестнадцатиричным номером nnnn
+
+!!!
+1234567 - ПОДХОДИТ под [0-9]{7}
+!!!
+
+* Квантификация - использование шаблона с повторениями:
+{N} - [\d]{7} (символ перед {} встретится 7 раз ПОДРЯД)
+{N,M} - N..M раз ПОДРЯД ({3, 7}, {0, 5} !!! )
+{N,} - N..INF
+? - ab?c (пред. символ встретится {0,1} раз ПОДРЯД)
++ - [\w]+ (пред. символ может {1,} раз ПОДРЯД)
+* - ab*c (пред. символ может {0,} раз ПОДРЯД)
+
+* Жадная квантификация - соответствие шаблона подстроке с максимально возможным кол-вом совпадений. Пример: /х{1,}/
+* Нежадная (ленивая) квантификация: /х{1,}?/
+!!!
+Признак "ленивости" действует только на тот квантификатор (подшаблон) в шаблоне, после которого стоит. Все остальные квантификаторы остаются "жадными".
+!!!
+
+* Флаги:
+u - кодировка utf-8, лучше ВСЕГДА СТАВИТЬ (например, если есть русские буквы)
+g - поиск должен быть глобальным, т.е. должны быть найдены ВСЕ соответствия в строке
+i - регистронезависимость
+m - поиск должен производиться в многострочном режиме
+
+* Дополнительные метасимволы:
+\^$.[]|()?*+{}
+
+
+*** ООП ***
+
+
+!!! ОБЯЗАТЕЛЬНО ПИСАТЬ $this-> (во избежание ошибок)
+
+* конструкторы и деструкторы:
+
+function __construct()
+function __destruct() // в любом случае при завершении скрипта вызывается
+
+* области видимости:
+
+public (по-умолчанию)
+private
+protected $var ($inst->var - ошибка)
+
+* static:
+
+static $count = 0;
+self :: $count
+Vector :: $count
+
+* const внутри class:
+
+const a = 228;
+self :: a
+Vector :: a
+
+!!! без $
+
+* abstract:
+
+хотя бы 1 abstract метод => весь class - abstract
+public abstract function abstrFunc() / abstract class abstrClass {}
+
+* interface:
+
+только объявление!
+множественное наследование через implements
+
+
+*** composer ***
+
+
+composer init
+composer require php-curl-class/php-curl-class
+composer install // установка всех зависимостей, прописанных в composer.json
+composer update
+composer self-update
+
+
+*** cURL ***
+
+
+* Основные команды cmd cURL (url-адрес всегда ПОСЛЕ опций):
+
+curl https://domain.ru - отображает содержимое HTML в терминале
+curl -O https://domain.ru/kek.html -O https://domain.ru/lol.jpg - сохраняет файлы с теми же именами в текущей директории
+curl -o/--output lel.html ... - с другим именем
+curl -o /tmp/examplе/lel.html ... - в другой директории
+curl -i/--include ... - добавить к выводу headers
+curl -I/--head ... - только headers
+curl ftp://... --user username:password - подключится к FTP-серверу и выведет содержимое каталога
+curl -T file.zip ftp://ftp.domain.ru/ --user username:password - загрузить файл на сервер FTP
+
+!!!
+ftp://speedtest.tele2.net/upload/ - последний "/" имеет значение, иначе ошибка
+!!!
+
+* PHP:
+
+$url = 'https://100realt.ru/sign';
+$ch = curl_init($url); // дескриптор потока
+
+// Опции
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); // сохраняет в переменную ответ из curl_exec
+curl_setopt_array($ch, [...опции...]): bool
+
+$response = curl_exec($ch);
+$errno = curl_errno($ch);
+
+if ($errno) {
+    echo 'Ошибка curl № ' . $errno . '<br>';
+    echo curl_error($ch);
+
+    curl_close($ch);
+    die();
+}
+
+curl_close($ch); // завершает сеанс cURL и ОСВОБОЖДАЕТ все ресурсы, дескриптор ch также уничтожается
+
+* Запросы (даже ajax) можно отслеживать в консоли Chrome во вкладке Network
+* Всегда ставить таймауты!
+* Прокси могут баниться не только сайтом, но и сервером
+
+* Основные опции:
+
+CURLOPT_URL => '...' - URL
+CURLOPT_HEADER => true - добавляет в ответ Header-инфу
+CURLOPT_FOLLOWLOCATION => true - следует за редиректом (например, после авторизации)
+CURLOPT_USERAGENT => '...' - инфа о браузере
+CURLOPT_SSL_VERIFYHOST => false и CURLOPT_SSL_VERIFYPEER => false - для безпроблемного парсинга через https
+CURLOPT_COOKIEJAR => $cookie_file и CURLOPT_COOKIEFILE => $cookie_file - запись куков в файл
+CURLOPT_COOKIESESSION => true - каждый раз начинает новую сессия + не считывает сессионные куки из $cookie_file
+CURLOPT_POSTFIELDS => $post_data - передача POST-параметров
+CURLOPT_HTTPHEADER => $headers - передача заголовков
+CURLOPT_TIMEOUT => 10 - таймаут 10 секунд
+CURLOPT_PROXY => '198.50.177.44:44699'
+CURLOPT_PROXYTYPE => CURLPROXY_SOCKS4
+
+!!!
+CURLOPT_USERAGENT иногда надо выключать при парсинге с локального сервера
+!!!
+
+
+*** Исключения ***
+
+
+* Exception:
+
+class MyException extends Exception {
+    function __constructor($msg) {
+        super($msg);
+    }
+}
+
+try {
+    throw new MyException('Error!');
+}
+catch(MyException $ex) {
+    echo $ex->getMessage();
+}
+
+* @ перед функцией, которая может может выбросить исключение:
+
+@ require_once 'несуществующий_файл.php'; // не выводится ошибка
+$login = @$_POST['login']; // вместо ошибки, будет равно null, как и все неопределённые переменные
+
+
+*** Магические методы ***
+
+
+* __clone() - срабатывает при клонировании объекта ($obj_cloned = clone $obj), нужен для смены ссылок в определённых
+внутренних свойствах
+
+"Перегрузочные" магические методы, работающие на недоступных (protected или private вне объявления класса) или
+несуществующих (везде) свойствах:
+
+* __get() - срабатывает при обращении
+
+!!!
+1) возвращает имя переменной
+2) __get() !== get instance из JavaScript
+!!!
+
+* __set() - срабатывает при изменении значения, return игнорируется
+* __isset() - при использовании isset() или empty()
+* __unset() - при вызове unset()
+
+
+*** MYSQL ***
+
+"" - для запроса
+'' - даты и строки
+`` - для названий объектов БД - баз, таблиц, столбцов (т. к. оно может совпадает с зарезервированным ключевым словом)
+
+!!!
+Перед тем, как сделать подобный запрос:
+
+$query = "INSERT INTO `test_table` VALUES (NULL, 'asdasf', 'asfasg', 'grqewd');";
+$result = mysqli_query($db, $query);
+
+Надо ОБЯЗАТЕЛЬНО проверить условие вставки в таблицу (если одно из полей уникально, ...). Если нельзя вставить такую запись,
+но попытка уже сделана, то AI всё равно сработает и id следующей успешно вставленной записи будет отличаться от ожидаемого
+!!!
+
+$db = mysqli_connect($host, $user, $password, $database);
+mysqli_set_charset($db, 'utf8');
+
+if (mysqli_connect_errno($db)) {
+    die(mysqli_connect_error($db));
+}
+
+$query = "SELECT * FROM `test_table`;";
+$result = mysqli_query($db, $query);
+
+mysqli_free_result($result);
+mysqli_close($db);
+
+
+* пример запроса
+$query = "UPDATE `test_table` SET `login` = 'new_login' WHERE `login` = 'old_login';";
+$result = mysqli_query($db, $query); // true / false при INSERT, UPDATE, DELETE
+
+* кол-во изменений:
+mysqli_affected_rows($db) : int // n / 0 - нет изменений / -1 - была ошибка
+
+* кол-во строк при SELECT:
+mysqli_num_rows($result)
+
+* массива очередной записи:
+mysqli_fetch ?????????????????????
+mysqli_fetch_assoc($result) // ассоциативный массив
+mysqli_fetch_row($result) // числовой массив !!! лучше подходит, если есть повторяющиеся поля !!!
+mysqli_fetch_object($result)
+
+
+*** HTTP(S) ***
+
+* можно создавать свои заголовки => фальсифицируемый
+
+* коды:
+1xx - инфа
+2xx - успех (200 OK)
+3xx - перенаправление (304 - "Not modified", неявное перенаправление на кэшированный (на сервере) ресурс)
+4хх - ошибка клиента (404 - "Not Found", ошибка в написании URL)
+5хх - ошибка сервера (самая частая - 500 "Internal Server Error")
+
+* технологии общения клиента с сервером:
+1) частый опрос (polling) - периодические запросы К к С (есть новая инфа? - нет / да), в силу "анонимности" HTTP сервер не
+запоминает, кто отсылал запрос
+2) длинный опрос (long-polling) - сервер сохраняет соединение с клиентов и отсылает данные в момент их изменения
+3) WebSocket
+
+* HTTPS (S - Secure) - HTTP с шифрованием через сертификаты SSL / TLS, кэшируется

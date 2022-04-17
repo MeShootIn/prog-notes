@@ -1,0 +1,28 @@
+*** клавиатура ***
+
+* reply_markup: {
+            keyboard: [
+                ['1', '2'],
+                [
+                    {
+                        text: 'текст кнопки',
+                        request_contact: true,
+                        request_location: true
+                    }
+                ]
+            ],
+            one_time_keyboard: true
+        }
+* inline_keyboard: [
+                [
+                    {
+                        text: 'купить товар',
+                        callback_data: 'товар куплен'
+                    }
+                ]
+            ],
+            one_time_keyboard: true
+
+bot.on('callback_query', (query) => {
+	${query.id, .data}
+})

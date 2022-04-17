@@ -1,0 +1,68 @@
+*** ОБЩИЕ ***
+
+xs sm md lg xl - размеры экрана
+<div class="container-fluid"> // на всю ширину экрана
+
+*** СИСТЕМА СЕТОК ***
+
+!!! Всего 12 столбцов !!!
+
+<div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6" style="background-color: blue;"> // у меньших размеров (xs sm md) div будет занимать 12 колонок
+
+* можно несколько размеров (выбирается подходящий) - <div class="col-lg-6 col-xs-12"
+
+
+*** ТЕКСТ ***
+
+<pre> // весь код
+     <code> // фрагмент кода
+
+<mark> // выделение
+
+Крутые штуки со шрифтами:
+https://itproger.com/course/bootstrap/4
+
+*** ТАБЛИЦЫ ***
+
+!!! Так же действуют class="warning" ... !!!
+
+<table class="table table-bordered table-striped">
+* -bordered // с рамкой
+* -sm // нет отступов (для больших таблиц)
+* -striped // поочерёдный рисуется задний фон у строк
+* -hover // задний фон при наведении мыши
+
+<div class="table-responsive">
+	<table> ... 		// адаптивная таблица
+
+*** КНОПКИ ***
+
+<button class="btn btn-success disabled">Подтвердить</button>
+* -link // ссылка
+* -md
+* active
+* block // блочная
+
+<a href="#" role="button">
+
+<div class="btn-group-vertical btn-group-md" data-toggle="buttons">
+        <label class="btn btn-primary">
+            <input type="checkbox">Чекбокс 1
+
+*** ТЕКСТОВЫЕ ПАНЕЛИ ***
+
+<div class="card">
+* .bg- / .text- / .border-
+	* -primary
+	* -success
+	* -warning
+	* -danger
+	* -default
+
+<div class="card-header">
+* -body
+* -footer
+
+<div class="card-group">

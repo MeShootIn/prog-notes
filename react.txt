@@ -1,0 +1,47 @@
+*** ОБЩИЕ ***
+
+* все компоненты должны реализовать метод render()
+* в JSX динамическая обработка в {} - указывать переменные ({this.props.nickname}, {pi}, {2 + 3})
+* внутри JSX атрибуты в стиле camelCase (<button onClick={func}>)
+* если внутри JSX-выражения >= 2 тега, то заключить в ()
+* render() должен возвращать только ОДИН объект
+
+class App extends React.Component{
+    render(){
+        return (
+            <div>
+
+export default Kek; // для испольования в других файлах
+ReactDOM.render(<App nickname="MeShootIn"/>, document.getElementById('root'));
+<div id="root"></div>
+
+* все компоненты в отдельных файлах
+
+*** refs ***
+
+!!! Использовать refs (виден внутри компонента) вместо id
+
+* render() {
+	return (...
+	<textarea ref="textareaRef" ...>);
+
+getText() { return this.refs.textareaRef.value; }
+
+*** state ***
+
+* изменяются, в отличие от props
+* только в конструкторе можно напрямую инициализировать state
+* при изменении state, React вызывает метод componentWillUnmount(), а затем render()
+* setState - асинхронный, для экономии ресурсов несколько setState подряд объединяются в ОДИН:
+
+this.state = {count : 0};
+...
+this.setState({count : this.state.count + 1});
+this.setState({count : this.state.count + 1});
+this.setState({count : this.state.count + 1});
+// this.state.count == 1 вместо 3
+
+для таких случаев надо писать:
+this.setState(prevState => ({count : prevState.count + 1}));
+this.setState(prevState => ({count : prevState.count + 1}));
+this.setState(prevState => ({count : prevState.count + 1}));

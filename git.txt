@@ -1,0 +1,116 @@
+*** ЛОКАЛЬНЫЙ РЕПОЗИТОРИЙ ***
+
+Stage (или cache) – это хранилище для файлов с изменениями, информация о которых попадет в единый коммит.
+
+Создание + добавление файлов:
+git init
+git status
+git add *
+git commit -m 'add all files'
+git commit -am 'comment' # git add только изменённые и удалённые файлы + коммит
+git commit --allow-empty -m 'empty commit'
+git commit -m 'Updated `composer.json` file' # или git commit -m "Updated \`composer.json\` file", иначе обратные кавычки будут запускать программу в Linux
+git tag 1.2.3 # помечает текущий коммит версией (тегом) 1.2.3
+# можно делать несколько тегов на 1 коммит, но так, чтобы они не повторялись
+git tag --delete 1.2.3 # удалить тег
+git tag # или git tag --list, выводит список версий в АЛФАВИТНОМ порядке
+git push --tags # пометка тегом без push'а коммитов
+git push --delete origin some_tag # удаление тега из удалённого репозитория без push'а коммитов (НЕ УДАЛЯЕТ из локального)
+git push -u origin master # push + устанавливает удалённый репозиторий origin и ветку master по умолчанию (можно писать git push)
+
+
+
+*** ЛОГИ ***
+
+git log [--oneline] # q для выхода
+git log --follow file.txt # коммиты, в которых были изменения файла file.txt, даже с учётом переименования
+git log --stat # коммиты со статистикой изменений
+git reflog # log + операции (reset, commit, checkout, ...)
+git show # разница между текущим и предыдующим коммитов в удобном виде
+
+Просмотр коммитов:
+git checkout <commit_id>
+
+Удаление:
+git rm [-r] [--force] to_be_committed_file # физическое удаление файла [папки] [принудительное]
+git rm [-r] --cached img/logo.png src/script.js # удаляет файлы [папки] из ИНДЕКСА без физического удаления
+git mv file.txt dir/kek.txt # переименование (перемещение) файла
+# rm и mv - обёртки над командами git и ОС
+git reset <file_name> # перемещает файл из "Changes to be committed" в "Untracked files" (удаляет из индекса)
+git reset <commit_id> --hard # ОБЯЗАТЕЛЬНО --hard - удаляет все коммиты ВЫШЕ commit_id и ВОЗВРАЩАЕТСЯ к нему
+git push --force # синхронизирует удалённые коммиты с локальными
+
+Stash:
+git stash # отложить ОТСЛЕЖИВАЕМЫЕ изменения в СТЕК
+git stash pop # извлечь последнее изменение из стека
+git stash apply # получить последнее изменение без удаления из стека
+git stash drop # удаляет последнее изменение
+git stash list # список изменений в порядке стека (LIFO)
+# отложенные изменения сохраняются в локальном репозитории, не передаются на сервер после push
+
+Ветки:
+git branch <branch_name> # создание ветки = копирование текущей ветки
+git checkout <branch_name> # переключение
+git checkout -b <branch_name> # создание ветки + переключение на эту ветку
+git push origin <branch_name>
+
+Слияние:
+git merge <branch_name> # текущая ветка мёрджится с <branch_name> (<branch_name> не удаляется)
+
+
+
+*** УДАЛЁННЫЙ РЕПОЗИТОРИЙ ***
+
+Подключение:
+git remote add <имя> <адрес_сервера>
+
+Удаление:
+git remote rm <имя>
+
+Слияние:
+??????????????????????????????????????????????????????????????????????????????????
+git merge <имя>/<branch_name> # текущая локальная ветка мёрджится с удалённой веткой ???????????????????????
+# пример: git merge origin/develop
+??????????????????????????????????????????????????????????????????????????????????
+
+Клонирование и pull:
+git clone https://github.com/...
+git pull ...
+
+
+
+*** ИГНОР ***
+
+!!!
+.gitignore игнорирует только те файлы, которые были созданы ПОЗЖЕ .gitignore => надо удалить их из индекса
+!!!
+
+git status --ignored # добавляет к выводу файлы, попавшие под шаблоны в .gitignore
+
+file.type # любой файл в любом каталоге / подкаталоге (file.type, img/file.type, ...)
+* # 0..inf символов
+? # 1 символ
+!file.type # исключение, если подходит под предыдущие шаблоны
+[] # как в регулярках, НО *.[!abc] - игнор файлов, которые содержат в типе символы a, b или c
+# комментарий
+
+!!!
+Чтобы экранировать шаблон подстановки, надо приписать слэш: \*, \?, \!
+Когда каталог игнорируется, все его файлы и подкаталоги также игнорируются
+Если шаблон начинается с "/", то он соответствует файлам и каталогам только в КОРНЕ хранилища, иначе - соответствует файлам и каталогам в ЛЮБОМ каталоге или подкаталоге
+!!!
+
+
+
+*** РАЗНОЕ ***
+
+Сложные команды:
+(git checkout master && git status && git checkout kek && git status) | less # применяет конвеерный оператор | ко всему выводу команд в скобке
+
+git update-git-for-windows # обновление git bash для винды
+.gitkeep # для сохранения пустых директорий (которые по умолчанию не сохраняются)
+
+less ~/.gitconfig
+git config --global user.name MeShootIn
+git config --global user.email dmitriimishutin@gmail.com
+git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe"

@@ -1,0 +1,295 @@
+*** РАЗНОЕ ***
+
+
+* все атрибуты (FROM, WHERE, HAVING, ...) должны идти по порядку
+
+* для имён столбцов, БД и таблиц надо использовать `` во избежание путаницы с ключевыми словами MySQL
+
+* кодировка:
+utf8_general_ci
+
+* тип - макс. длина:
+
+INT - 11
+VARCHAR - 255 ( mb_strlen(md5(password)) == 32 )
+TEXT - 65536
+DATE (для даты лучше INT - кол-во секунд в UnixTime: UNIX_TIMESTAMP(NOW()) )
+<> - не равно
+IS NOT NULL (а не <> NULL!)
+
+* лучше ставить в конце запроса ";" - для нескольких команд (например, INSERT -> DELETE -> UPDATE)
+
+*
+USE `database_name`; # чтобы из главной консоли, не относящейся к конкретной БД, не писать по типу INSERT INTO
+`database_name`.`table_name`, а сразу INSERT INTO `table_name`
+
+*
+DESCRIBE `table_name`; # структура таблицы <=> SHOW COLUMNS FROM `table_name`;
+
+
+*** КОММЕНТАРИИ ***
+
+
+# однострочный
+-- однострочный (нужен хотя бы 1 пробел после "--")
+/*
+Многострочный
+*/
+
+
+*** CREATE ***
+
+
+*
+CREATE DATABASE `database_name` CHARACTER SET utf8 COLLATE utf8_general_ci; # collate - сопоставить
+
+*
+CREATE TABLE `shop` (
+    `id` INT(4) UNSIGNED ZEROFILL DEFAULT 228 NOT NULL AUTO_INCREMENT,
+    `dealer` ENUM('t-shirt', 'polo', 'dress') NOT NULL,
+    `price` DOUBLE(16, 2) DEFAULT '0.00' NOT NULL,
+    PRIMARY KEY(`id`, `dealer`),
+    UNIQUE (`email`)
+) DEFAULT CHARSET=utf8;
+
+* несколько первичных ключей (`id`, `dealer`) <=> не может быть полных дубликатов (когда у 2 записей все элементы совпадают)
+
+!!!
+NULL != DEFAULT значению => либо INSERT ... (..., DEFAULT, ...), либо в кортеже после INTO `table_name` (...) пропускаем поле
+!!!
+
+
+*** ALTER ***
+
+
+*
+ALTER TABLE `table_name`
+ADD COLUMN `col_2` VARCHAR(128) NULL AFTER `col_1`;
+
+*
+ALTER TABLE `table_name`
+CHANGE COLUMN `id` `id` INT NOT NULL;
+
+*
+ALTER TABLE `table_name`
+RENAME `new_table_name`;
+
+*
+ALTER TABLE `table_name`
+RENAME COLUMN `old_name` TO `new_name`; # тут проблема с синтаксисом
+
+*
+ALTER TABLE `table_name`
+DROP `column_name`;
+
+
+*** SELECT ***
+
+
+SELECT [DISTINCT] список_полей
+[FROM список_таблиц
+[WHERE ограничения_на_список_строк]
+[GROUP BY поле]
+[HAVING ограничения_на_строки_после_группировки]
+[ORDER BY поле [ASC (по умолчанию) / DESC]]
+[LIMIT кол-во [OFFSET кол-во]]]
+
+
+* DISTINCT нужен для уникализации строк ВЫХОДНОЙ таблицы
+* LIMIT и OFFSET так же действуют для ВЫХОДНОЙ таблицы (по крайней мере для SELECT ?????)
+
+*
+SELECT `login`, `password`
+FROM `table_name`
+LIMIT 10 OFFSET 2
+
+*
+SELECT * FROM `table_name`
+GROUP BY `col`; # группировка будет только по столбцу `col`, остальные стобцы в строке будут соответствовать первой строке с
+очередным группируемым значением поля `col`
+
+*
+SELECT *
+FROM `table_name`
+GROUP BY `name`
+HAVING COUNT(`name`) = 1; # выводит имена, встречающиеся только 1 раз
+
+!!!
+Значение NULL попадает под COUNT(`name`) = 0 и выводит только первую попавшуюся строку => лучше NULL не использовать
+!!!
+
+!!!
+При группировке происходит неявная сортировка (ASC) по группируемому полю (-ям)
+!!!
+
+*
+SELECT *
+FROM `table_name`
+WHERE NOT `name` = "Ольга";
+
+* Поиск по шаблону:
+SELECT *
+FROM `table_name`
+WHERE `name` LIKE '_ле%'; # Александр, Елена, ...
+/*
+% <=> *
+_ <=> ?
+*/
+
+
+*** INSERT ***
+
+
+!!!
+Перед тем, как сделать запрос:
+
+$query = "INSERT INTO `test_table` VALUES (NULL, 'asdasf', 'asfasg', 'grqewd');";
+$answer = mysqli_query($db, $query);
+
+Надо ОБЯЗАТЕЛЬНО проверить условие вставки в таблицу (согласованность ключей, уникальность полей, ...). Если нельзя вставить
+такую строку, но попытка уже сделана, то AI всё равно сработает и id следующей успешно вставленной строки будет отличаться от
+ожидаемого, т. е. надо сделать такой запрос (ЗАРАНЕЕ сделав UPDATE вставленной строки):
+ALTER TABLE `table_name`
+CHANGE COLUMN `id` `id` INT NOT NULL; # удаление автоинкремента
+ALTER TABLE `table_name`
+CHANGE COLUMN `id` `id` INT NOT NULL AUTO_INCREMENT; # подключение обратно
+!!!
+
+*
+INSERT INTO `table_name`
+VALUES (123, 'MeShootIn', 'qwerty123', 'dmitriimishutin@gmail.com'); # NULL для AI
+
+*
+INSERT INTO `table_name`
+(`password`, `login`)
+VALUES ('qwerty123', 'MeShootIn'); # в любом порядке, не указанные поля будут по умолчанию (если не указано значение по
+умолчанию => приводится к NULL-подобному значению)
+
+*
+... VALUES ('qwerty123', 'kek'), ('zxcasd', 'lol'); # несколько строк
+
+*
+INSERT INTO `table_name` VALUES (NULL, 'log', 'pass', 'log@mail.ru'); # тогда придётся указывать ВСЕ поля
+
+
+*** DELETE ***
+
+
+DELETE FROM `table_name`
+[WHERE условие]
+[ORDER BY поле [ASC (по умолчанию) / DESC]]
+[LIMIT кол-во]
+
+
+*
+DELETE FROM `table_name`
+WHERE `date` < DATE_SUB(CURDATE(), INTERVAL 5 DAY); # DAY / HOUR / MINUTE
+# DATE_SUB вычитает из текущей даты интервал в 5 дней
+
+
+*** UPDATE ***
+
+
+UPDATE `table_name`
+SET `поле1` = выражение1
+...
+WHERE ...
+[ORDER BY поле [ASC (по умолчанию) / DESC]]
+[LIMIT кол-во]
+
+
+*** АГРЕГАТНЫЕ (ГРУППОВЫЕ) ФУНКЦИИ ***
+
+
+COUNT
+SUM
+AVG
+STDDEV
+VARINACE (дисперсия)
+MIN, MAX
+
+
+!!!
+Все игнорируют значение NULL, кроме COUNT
+!!!
+
+*
+SELECT COUNT(*)
+FROM `table_name`
+WHERE `password` = 'qwerty';
+
+*
+SELECT `password`, COUNT(*)
+FROM `table_name`
+GROUP BY `password`
+ORDER BY COUNT(*) DESC; # выдаст пароли и кол-во экземпляров каждого в порядке убывания, COUNT(*) <=> COUNT(`password`)
+
+
+*** СОГЛАСОВАННОСТЬ (КОНСИСТЕНТНОСТЬ) ДАННЫХ ***
+
+
+* Добавить ограничение:
+ALTER TABLE `product`
+ADD CONSTRAINT `fk_brand_id`
+FOREIGN KEY(`brand_id`)
+REFERENCES `brand`(`id`)
+ON DELETE NO ACTION
+ON UPDATE NO ACTION;
+
+!!!
+brand_id - внешний ключ, а не id из brand (просто не путать)
+!!!
+
+!!!
+Ошибка может возникнуть при наличии ключа в `product`, не содержащегося в столбце `id` в таблице `brand`
+!!!
+
+* При удалении записи из `brand` с соответствующим `id`, будут удалены и записи в `product`, содержащие данный внешний ключ:
+...
+ON DELETE CASCADE
+...
+
+* Удалить ограничение:
+ALTER TABLE `product`
+DROP FOREIGN KEY `fk_brand_id`;
+
+
+*** INNER JOIN ***
+
+
+* Ищет пересечение таблиц
+
+*
+SELECT * FROM `product`
+	INNER JOIN `category` ON `category_id` = `category`.`id`; # сначала идут столбцы из `product`, затем из `category`
+
+*
+SELECT `product`.`id`, `brand`.`name` AS 'brand_name', `product_type`.`name` AS 'product_type_name', `category`.`name` AS
+'category_name', `price`, `discount` FROM `product`
+INNER JOIN `brand` ON `brand_id` = `brand`.`id`
+INNER JOIN `category` ON `category_id` = `category`.`id`
+INNER JOIN `product_type` ON `product_type_id` = `product_type`.`id`
+WHERE `product`.`id` <= 5;
+# при наличии одинаковых имён столбцов, надо конкретизировать принадлежность столбца
+
+
+*** JOINS.... ***
+
+
+*** ИНДЕКСАЦИЯ ***
+
+
+* Как часто индексируются:
+1) PRIMARY KEY - всегда
+2) FOREIGN KEY - часто, но зависит от БД
+3) UNIQUE - по просьбе пользователя
+
+* Индексировать те поля, которые часто участвуют в
+1) WHERE: только =, НО >, >=, <, <= - зависит от данных
+2) GROUP BY
+3) ORDER BY
+4) ON
+
+* Не надо индексировать:
+1) HAVING, т. к. работает уже после группировки и WHERE, т. е. не с исходной таблицей
+2) LIKE

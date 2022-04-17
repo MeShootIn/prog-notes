@@ -1,0 +1,57 @@
+*** МОДУЛИ ***
+
+file.js:
+* одна функция
+module.exports.f = (x) => {
+    console.log(x * x);
+}
+// module.exports = {g} - НЕ ПИСАТЬ после module.exports.f !!!!!
+
+* несколько функций
+function f() {}
+function g() {}
+module.exports = {f, g}
+
+index.js:
+file = require("./file");
+
+file.f(2);
+
+*** РАБОТА С ДИРЕКТОРИЯМИ ***
+
+fs = require("fs");
+
+* синхронное чтение/запись
+text = fs.readFileSync("input.txt", "utf-8");
+fs.writeFileSync("output.txt", "текст");
+
+* асинхронное чтение/запись
+fs.readFile("input.txt", "utf-8", function(err, data) {
+    console.log(data); // функция выполнится сразу после чтения файла
+});
+fs.writeFile("output.txt", "текст", function(err, data) {...});
+
+* удаление
+fs.unlink("file.txt", function() {...});
+
+* создание папки
+fs.mkdirSync("папка");
+
+* удаление папки (но сначала надо удалить все файлы в папке, иначе - ошибка)
+fs.rmdirSync("папка");
+
+*** СЕРВЕР ***
+
+* создание сервера
+http = require("http");
+
+server = http.createServer(function(req, res) {
+    // информация о сервера (url, иконка, ...)
+    console.log(req.url);
+
+    // 200 - страница найдена
+    res.writeHead(200, {"Content-Type": "text/plain; charset=utf-8"});
+    res.end("Сервер создан");
+});
+
+server.listen(3000, "localhost");
