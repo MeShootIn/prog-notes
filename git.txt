@@ -113,4 +113,4 @@ git update-git-for-windows # обновление git bash для винды
 less ~/.gitconfig
 git config --global user.name MeShootIn
 git config --global user.email dmitriimishutin@gmail.com
-git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe"
+git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe"
