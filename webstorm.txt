@@ -1,0 +1,23 @@
+Ctrl + E - панель с недавними локациями: файлами, TODO, Problems, ...
+^^^^^^^^ Там же можно сразу искать локации
+
+
+# РЕФАКТОРИНГ
+Shift + F6 - Rename
+F6 - переместить несколько модулей в отдельные файлы и компоненты
+Ctrl + Alt + Shift + T - Refactor this (все варианты рефактора)
+
+Shift + F7 / Ctrl + click - Find Usages
+Alt + Enter - Quick Fixes (подсказки)
+
+
+
+
+# Postfix templates:
+someVariable.шаблон
+
+'kek'.log -> console.log('kek'); // ПОДСТАВЛЯЕТСЯ ";", а при log -> 
+console.log(justSomething) нету ";"
+
+const a = 123;
+a.let -> let a1 = a;
