@@ -5,7 +5,10 @@ Stage (или cache) – это хранилище для файлов с изм
 Создание + добавление файлов:
 git init
 git status
-git add *
+git add . # только текущая папка
+git add -a # только проиндексированные файлы
+git add -A # абсолютно всё
+git add -p file.txt # добавление в индекс определённых фрагментов из файла
 git commit -m 'add all files'
 git commit -am 'comment' # git add только изменённые и удалённые файлы + коммит
 git commit --allow-empty -m 'empty commit'
@@ -32,9 +35,9 @@ git show # разница между текущим и предыдующим к
 git checkout <commit_id>
 
 Удаление:
-git rm [-r] [--force] to_be_committed_file # физическое удаление файла [папки] [принудительное]
-git rm [-r] --cached img/logo.png src/script.js # удаляет файлы [папки] из ИНДЕКСА без физического удаления
-git mv file.txt dir/kek.txt # переименование (перемещение) файла
+git rm [-r] [--force] unwanted # удаление (физическое + из индекса) файла [папки] [даже если он в Untracked files]
+git rm [-r] --cached img/logo.png src/script.js # только из индекса (без физического удаления)
+git mv file.txt dir/kek.txt # переименование (перемещение) файла, работает аналогично git rm
 # rm и mv - обёртки над командами git и ОС
 git reset <file_name> # перемещает файл из "Changes to be committed" в "Untracked files" (удаляет из индекса)
 git reset <commit_id> --hard # ОБЯЗАТЕЛЬНО --hard - удаляет все коммиты ВЫШЕ commit_id и ВОЗВРАЩАЕТСЯ к нему
@@ -49,10 +52,24 @@ git stash list # список изменений в порядке стека (L
 # отложенные изменения сохраняются в локальном репозитории, не передаются на сервер после push
 
 Ветки:
-git branch <branch_name> # создание ветки = копирование текущей ветки
-git checkout <branch_name> # переключение
-git checkout -b <branch_name> # создание ветки + переключение на эту ветку
-git push origin <branch_name>
+# Подходы к ведению веток:
+# 1) Тематические (feature, ...)
+# 2) Релизные (v1.0.0, v1.1.0, ..., v1.2.3, v2.0.0, ...)
+# 3) git flow: 1) + 2)
+git branch <branch_name> # создание ветки
+git branch -v <branch_name> # отобразить текущее состояние всех веток (HEAD, 
+последний коммит, ...)
+git checkout [-b] <branch_name> # переключение [+ создание]
+# Если имеются незакоммиченные изменения в однаковых файлах в одной и в другой 
+ветке, то при git checkout эти файлы перезаписываться не будут (их список 
+отобразится при выполнении команды) и ошибки тоже не будет!!!
+
+# Поведение выше удобно, если нужно пофиксить баги в master'е:
+# 1) Вносим исправления
+# 2) git checkout -b fix
+# 3) Вносим ещё исправления...
+# 4) git commit -am 'Fix bugs from `master` branch' # изменения сохранены в fix
+# 5) git checkout master && git merge fix
 
 Слияние:
 git merge <branch_name> # текущая ветка мёрджится с <branch_name> (<branch_name> не удаляется)
