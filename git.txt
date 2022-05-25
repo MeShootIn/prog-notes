@@ -78,6 +78,23 @@ git branch -f master <commit_id>
 # Либо с переходом в master:
 git checkout -B master <commit_id>
 
+# Detached (отделённый) HEAD:
+git checkout <intermediate_commit>
+# Внесли изменения, но забыли, что находимся в промежуточном коммите...
+git commit -am 'Some fixes'
+# Создаётся отдельная висячая ветка, с новым коммитом <detached_commit>
+git checkout fix # переключаемся на ту ветку, в которой надо было коммитить
+git cherry-pick <detached_commit>
+# Изменения внесены в нужную ветку fix
+
+# TODO https://youtu.be/3z-LjQacu2Q?list=PLDyvV36pndZFHXjXuwA_NywNrVQO0aQqb
+# Восстановление предыдущих версий файлов/папок:
+git checkout <commit_with_needed_files> index.html src/kek.js
+# Находимся на том же HEAD, но с добавленными в индекс старыми файлами
+
+# Просмотр истории и старых файлов, символы ~, ^, @, поиск с :/
+# TODO https://youtu.be/l-sTQBr3rXY?list=PLDyvV36pndZFHXjXuwA_NywNrVQO0aQqb
+
 Слияние:
 git merge <branch_name> # текущая ветка мёрджится с <branch_name> (<branch_name> не удаляется)
 
