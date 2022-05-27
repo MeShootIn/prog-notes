@@ -38,8 +38,7 @@ touch ../file.txt # создать файл
 
 mkdir ~/folder another_folder # создать папки
 
-rm file.txt # удалить файл
-rm -r ./folder # удалить папку ("./" писать не обязательно)
+rm [-r] [-f] ./folder # удалить файл [папку] [принудительно]
 
 cp file_1 file_2 # скопировать file_1 в file_2
 cp -r dir_1 dir_2 # папку dir_1 (включительно) в dir_2
