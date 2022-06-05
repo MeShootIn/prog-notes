@@ -42,7 +42,7 @@ git show # разница между текущим и предыдующим к
 git checkout <commit_id>
 
 Удаление:
-git rm [-r] [--force] unwanted # удаление (физическое + из индекса) файла 
+git rm [-r] [--force] unwanted_file # удаление (физическое + из индекса) файла 
 [папки] [даже если он в Untracked files]
 git rm [-r] --cached img/logo.png src/script.js # только из индекса 
 (без физического удаления)
