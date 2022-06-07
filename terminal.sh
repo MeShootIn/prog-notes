@@ -154,6 +154,8 @@ echo "публичный_ключ" > .ssh/authorized_keys
 # Для цветных подсказок в файле ~/.bashrc раскомментить строку:
 force_color_prompt=yes
 
+# Конфигурация ssh: https://linuxize.com/post/using-the-ssh-config-file/
+
 
 
 ### СКРИПТЫ НА BASH ###
