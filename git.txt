@@ -53,6 +53,7 @@ git reset <file_name> # перемещает файл из "Changes to be commit
 "Untracked files" (удаляет из индекса)
 git reset <commit_id> --hard # ОБЯЗАТЕЛЬНО --hard - удаляет все коммиты ВЫШЕ 
 commit_id и ВОЗВРАЩАЕТСЯ к нему
+git restore <file>...
 git push --force # синхронизирует удалённые коммиты с локальными
 
 Stash:
