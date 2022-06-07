@@ -139,7 +139,8 @@ ssh meshootin@shell.xshellz.com -p 22 # логин@сервер [-p порт]
 # 1) создание ключа
 ssh-keygen # генерация ключа
 ssh-add # добавить ключ
-# в папке ~/.ssh есть 2 ключа: id_rsa, id_rsa.pub - закрытый (приватный) и открытый (публичный)
+# в папке ~/.ssh есть 2 ключа: id_rsa, id_rsa.pub - закрытый (приватный) и 
+# открытый (публичный)
 # также файл known_hosts содержит посещённые сервера
 
 # 2) копируем публичный ключ в буфер обмена
@@ -154,7 +155,11 @@ echo "публичный_ключ" > .ssh/authorized_keys
 # Для цветных подсказок в файле ~/.bashrc раскомментить строку:
 force_color_prompt=yes
 
-# Конфигурация ssh: https://linuxize.com/post/using-the-ssh-config-file/
+## КОНФИГ ##
+# https://linuxize.com/post/using-the-ssh-config-file/#ssh-config-file-structure-and-patterns
+ssh -o "User=root" my-server # юзать стандартный конфиг, переопределив 
+# некоторые параметры
+ssh -F ~/another-config my-server # юзать другой конфиг
 
 
 
