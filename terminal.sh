@@ -144,6 +144,9 @@ ssh meshootin@shell.xshellz.com -p 22 # логин@сервер [-p порт]
 # пароль: Anders%456
 exit # дисконнект
 
+# Замена дефолтного порта:
+vim /etc/ssh/sshd_config # '# Port 22' -> 'Port 5051'
+
 # Авторизация без вводы пароля:
 
 # 1) создание ключа
