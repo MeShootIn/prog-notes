@@ -148,7 +148,7 @@ exit # дисконнект
 
 # ПРЕДВАРИТЕЛЬНАЯ НАСТРОЙКА
 # Замена дефолтного порта:
-vim /etc/ssh/sshd_config # '# Port 22' -> 'Port 5051'
+vim /etc/ssh/sshd_config # '# Port 22' -> 'Port 1234'
 sudo apt update -y && sudo apt upgrade -y # затем обновление
 
 # АВТОРИЗАЦИЯ БЕЗ ВВОДЫ ПАРОЛЯ:
