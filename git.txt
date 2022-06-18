@@ -1,7 +1,7 @@
 *** ЛОКАЛЬНЫЙ РЕПОЗИТОРИЙ ***
 
 Коммит - "снапшот" репозитория
-Stage (или cache) – это хранилище для файлов с изменениями, информация о 
+Stage (или cache) – это хранилище для файлов с изменениями, информация о
 которых попадет в единый коммит.
 
 Создание + добавление файлов:
@@ -15,7 +15,7 @@ git commit -m 'add all files'
 git commit -am 'comment' # git add только изменённые и удалённые файлы + коммит
 git commit --allow-empty -m 'empty commit'
 git commit --allow-empty-message -m '' # пустое сообщение
-git commit -m 'Updated `composer.json` file' # или git commit -m "Updated 
+git commit -m 'Updated `composer.json` file' # или git commit -m "Updated
 \`composer.json\` file", иначе обратные кавычки будут запускать прогу в Linux
 git tag 1.2.3 # помечает текущий коммит версией (тегом) 1.2.3
 # можно делать несколько тегов на 1 коммит, но так, чтобы они не повторялись
@@ -32,7 +32,7 @@ git push -u origin master # push + устанавливает удалённый
 *** ЛОГИ ***
 
 git log [--oneline] # q для выхода
-git log --follow file.txt # коммиты, в которых были изменения файла file.txt, 
+git log --follow file.txt # коммиты, в которых были изменения файла file.txt,
 даже с учётом переименования
 git log --stat # коммиты со статистикой изменений
 git reflog # log + операции (reset, commit, checkout, ...)
@@ -42,16 +42,16 @@ git show # разница между текущим и предыдующим к
 git checkout <commit_id>
 
 Удаление:
-git rm [-r] [--force] unwanted_file # удаление (физическое + из индекса) файла 
+git rm [-r] [--force] unwanted_file # удаление (физическое + из индекса) файла
 [папки] [даже если он в Untracked files]
-git rm [-r] --cached img/logo.png src/script.js # только из индекса 
+git rm [-r] --cached img/logo.png src/script.js # только из индекса
 (без физического удаления)
-git mv file.txt dir/kek.txt # переименование (перемещение) файла, работает 
+git mv file.txt dir/kek.txt # переименование (перемещение) файла, работает
 аналогично git rm
 # rm и mv - обёртки над командами git и ОС
-git reset <file_name> # перемещает файл из "Changes to be committed" в 
+git reset <file_name> # перемещает файл из "Changes to be committed" в
 "Untracked files" (удаляет из индекса)
-git reset <commit_id> --hard # ОБЯЗАТЕЛЬНО --hard - удаляет все коммиты ВЫШЕ 
+git reset <commit_id> --hard # ОБЯЗАТЕЛЬНО --hard - удаляет все коммиты ВЫШЕ
 commit_id и ВОЗВРАЩАЕТСЯ к нему
 git restore <file>...
 git push --force # синхронизирует удалённые коммиты с локальными
@@ -62,7 +62,7 @@ git stash pop # извлечь последнее изменение из сте
 git stash apply # получить последнее изменение без удаления из стека
 git stash drop # удаляет последнее изменение
 git stash list # список изменений в порядке стека (LIFO)
-# отложенные изменения сохраняются в локальном репозитории, не передаются на 
+# отложенные изменения сохраняются в локальном репозитории, не передаются на
 сервер после push
 
 Ветки:
@@ -71,11 +71,11 @@ git stash list # список изменений в порядке стека (L
 # 2) Релизные (v1.0.0, v1.1.0, ..., v1.2.3, v2.0.0, ...)
 # 3) git flow: 1) + 2)
 git branch <branch_name> # создание ветки
-git branch -v <branch_name> # отобразить текущее состояние всех веток (HEAD, 
+git branch -v <branch_name> # отобразить текущее состояние всех веток (HEAD,
 последний коммит, ...)
 git checkout [-b] <branch_name> # переключение [+ создание]
-# Если имеются незакоммиченные изменения в одинаковых файлах в одной и другой 
-ветке, то при git checkout эти файлы перезаписываться не будут (их список 
+# Если имеются незакоммиченные изменения в одинаковых файлах в одной и другой
+ветке, то при git checkout эти файлы перезаписываться не будут (их список
 отобразится при выполнении команды) и ошибки тоже не будет!!!
 
 # Поведение выше удобно, если нужно пофиксить баги в master'е:
@@ -110,7 +110,7 @@ git checkout <commit_with_needed_files> index.html src/kek.js
 # TODO https://youtu.be/l-sTQBr3rXY?list=PLDyvV36pndZFHXjXuwA_NywNrVQO0aQqb
 
 Слияние:
-git merge <branch_name> # текущая ветка мёрджится с <branch_name> 
+git merge <branch_name> # текущая ветка мёрджится с <branch_name>
 (<branch_name> не удаляется)
 
 
@@ -125,7 +125,7 @@ git remote rm <имя>
 
 Слияние:
 ???????????????????????????????????????????????????????????????????????????????
-git merge <имя>/<branch_name> # текущая локальная ветка мёрджится с удалённой 
+git merge <имя>/<branch_name> # текущая локальная ветка мёрджится с удалённой
 веткой ???????????????????????
 # пример: git merge origin/develop
 ???????????????????????????????????????????????????????????????????????????????
@@ -143,22 +143,22 @@ git pull ...
 надо удалить их из индекса
 !!!
 
-git status --ignored # добавляет к выводу файлы, попавшие под шаблоны в 
+git status --ignored # добавляет к выводу файлы, попавшие под шаблоны в
 .gitignore
 
 file.type # файл в любом каталоге / подкаталоге (file.type, img/file.type, ...)
 * # 0..inf символов
 ? # 1 символ
 !file.type # исключение, если подходит под предыдущие шаблоны
-[] # как в регулярках, НО *.[!abc] - игнор файлов, которые содержат в типе 
+[] # как в регулярках, НО *.[!abc] - игнор файлов, которые содержат в типе
 символы a, b или c
 # комментарий
 
 !!!
 Чтобы экранировать шаблон подстановки, надо приписать слэш: \*, \?, \!
 Когда каталог игнорируется, все его файлы и подкаталоги также игнорируются
-Если шаблон начинается с "/", то он соответствует файлам и каталогам только в 
-КОРНЕ хранилища, иначе - соответствует файлам и каталогам в ЛЮБОМ каталоге или 
+Если шаблон начинается с "/", то он соответствует файлам и каталогам только в
+КОРНЕ хранилища, иначе - соответствует файлам и каталогам в ЛЮБОМ каталоге или
 подкаталоге
 !!!
 
@@ -167,15 +167,15 @@ file.type # файл в любом каталоге / подкаталоге (fi
 *** РАЗНОЕ ***
 
 Сложные команды:
-(git checkout master && git status && git checkout kek && git status) | less 
+(git checkout master && git status && git checkout kek && git status) | less
 # применяет конвеерный оператор | ко всему выводу команд в скобке
 
-git update-git-for-windows # обновление git bash для винды
-# Для индексации пустой директории (которые git не индексирует) создают в ней 
+git-update-git-for-windows # обновление git bash для винды
+# Для индексации пустой директории (которые git не индексирует) создают в ней
 # пустой файл .gitkeep
 
 less ~/.gitconfig
 git config --global user.name MeShootIn
 git config --global user.email dmitriimishutin@gmail.com
-git config --global credential.helper 
+git config --global credential.helper
 "/mnt/c/Program\ Files/Git/mingw64/libexec/git-core/git-credential-manager-core.exe"
