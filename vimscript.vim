@@ -1,6 +1,6 @@
-" ############
-" Introduction
-" ############
+" ##############
+"  Introduction
+" ##############
 
 " https://learnxinyminutes.com/docs/vimscript/
 
@@ -12,9 +12,9 @@ echo [1,
 
 
 
-" ########
-" Booleans
-" ########
+" ##########
+"  Booleans
+" ##########
 
 " `v:true` evaluates to 1 or the string 'v:true'
 " `v:false` evaluates to 0 or the string 'v:false'
@@ -30,9 +30,9 @@ endif
 
 
 
-" #######
-" Strings
-" #######
+" #########
+"  Strings
+" #########
 
 echo  'Let''s go!'      | " Two single quotes become one quote character"
 
@@ -61,11 +61,11 @@ echo  'Hellö'[4]           | " Returns a byte, not the character 'ö'
 
 
 
-" #####
-" Lists
-" #####
+" #######
+"  Lists
+" #######
 
-" An ordered zero-indexed heterogeneous sequence of arbitrary Vim script 
+" An ordered zero-indexed heterogeneous sequence of arbitrary Vim script
 " objects.
 
 echo [1, 2] + [2, 4]
@@ -76,15 +76,15 @@ echo [1, 2, 3, 4][:]
 " functions (|list-functions|) or assign directly to an item.
 " NOTE No error (just print the whole list):
 echo ['a', 'b', 'c', 'd', 'e'][0:100000]
-" NOTE You can't use negative bare indices with strings. However, you can use 
+" NOTE You can't use negative bare indices with strings. However, you can use
 " negative indices when slicing strings though!
 echo "abcd"[-1] . "abcd"[-2:] | " <=> '' . 'cd'
 
 
 
-" ##############
-" List Functions
-" ##############
+" ################
+"  List Functions
+" ################
 
 let foo = ['a']
 call add(foo, 'b') | " after that: ['a', 'b']
@@ -99,9 +99,9 @@ call reverse(foo) | " after that: ['b', 'a']
 
 
 
-" ############
-" Dictionaries
-" ############
+" ##############
+"  Dictionaries
+" ##############
 
 " An UNORDERED sequence of key-value pairs, keys are always STRINGS (numbers
 " are implicitly converted to strings).
@@ -113,15 +113,20 @@ echo  {'a': 1, 'b': 2}['a']
 
 
 
-" #########
-" TODO Variables
-" #########
+" ###########
+"  Variables
+" ###########
 
 " `let`, `const`
-" let g:my_var = 1        | " Global variable"
-" let l:my_var = 1        | " Local to current function (see functions below)"
+" let g:my_var = 1        | " Global variable
+" let l:my_var = 1        | " Local to current function (see functions below)
 " let s:my_var = 1        | " Local to current script file
-" let a:my_arg = 1        | " Function argument (see functions below)"
+" let a:my_arg = 1        | " Function argument (see functions below)
+" let b:my_var = 1        | " Local to current buffer
+" let w:my_var = 1        | " Local to current window
+" let t:my_var = 1        | " Local to current tab page
+let kek = 123
+unlet kek
 
 " The Vim scope is read-only
 " echo  v:true            | " Special built-in Vim variables (|v:var|)"
@@ -145,9 +150,9 @@ let [mother, father; children] = ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
 
 
 
-" #####
-" Loops
-" #####
+" #######
+"  Loops
+" #######
 
 for person in ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
 endfor
@@ -171,9 +176,31 @@ endfor
 
 
 
-" ##########
-" Exceptions
-" ##########
+" ####################
+"  Regular expression
+" ####################
+
+" A regular expression pattern can be a string.
+" Substitute 'arbidol' for 'arbidol':
+substitute/"/'/
+
+
+
+" ###########################
+"  Implicit type conversions
+" ###########################
+
+" A string becomes its numerical value if it can be parsed to a number,
+" otherwise it becomes zero.
+echo '1' + 1         | " 2
+echo '1' . 1        | " '11'
+echo 'kek' + 228 | " 228
+
+
+
+" ############
+"  Exceptions
+" ############
 
 " Throw new exceptions as strings, catch them by pattern-matching a regular
 " expression against the string
