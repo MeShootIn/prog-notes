@@ -1,12 +1,20 @@
-" BASICS
+" ############
+" Introduction
+" ############
 
 " https://learnxinyminutes.com/docs/vimscript/
 
 echo 'Hello, ' | echo 'World!'
-echo "Hello
-    \ world"
+echo 'Hello
+    \ world'
 echo [1,
       \ 2]
+
+
+
+" ########
+" Booleans
+" ########
 
 " `v:true` evaluates to 1 or the string 'v:true'
 " `v:false` evaluates to 0 or the string 'v:false'
@@ -22,15 +30,21 @@ endif
 
 
 
-" STRINGS
+" #######
+" Strings
+" #######
+
+echo  'Let''s go!'      | " Two single quotes become one quote character"
 
 " Strings are compared based on their alphanumerical ordering.
-
 " Case sensitivity depends on the setting of 'ignorecase'.
 echo 'a' < 'b'
 " Explicit case-sensitivity is specified by appending '#' (match case) or '?'
 " (ignore case) to the operator. Prefer explicity case sensitivity when
 " writing portable scripts.
+echo  'a' <  'B'         | " True or false depending on 'ignorecase'
+echo  'a' <? 'B'         | " True
+echo  'a' <# 'B'         | " False
 
 " Regular expression matching:
 echo  "hi" =~  "hello"    | " Regular expression match, uses 'ignorecase'
@@ -41,30 +55,67 @@ echo  "hi" !~# "hello"    | " Regular expression unmatch, case sensitive
 echo  "hi" !~? "hello"    | " Regular expression unmatch, case insensitive
 
 echo 'Hello'[1:-2]
+" An ordered zero-indexed sequence of bytes. The encoding of text into bytes
+" depends on the option |'encoding'|.
+echo  'Hellö'[4]           | " Returns a byte, not the character 'ö'
 
 
 
-" LISTS
+" #####
+" Lists
+" #####
+
+" An ordered zero-indexed heterogeneous sequence of arbitrary Vim script 
+" objects.
 
 echo [1, 2] + [2, 4]
-" Substrings (second index is inclusive)
+" NOTE [start:end] - all boundaries included!
 " Shallow copy of entire list
 echo [1, 2, 3, 4][:]
 " All slicing operations create new lists. To modify a list in-place use list
 " functions (|list-functions|) or assign directly to an item.
+" NOTE No error (just print the whole list):
+echo ['a', 'b', 'c', 'd', 'e'][0:100000]
+" NOTE You can't use negative bare indices with strings. However, you can use 
+" negative indices when slicing strings though!
+echo "abcd"[-1] . "abcd"[-2:] | " <=> '' . 'cd'
 
 
 
-" DICTIONARIES
+" ##############
+" List Functions
+" ##############
+
+let foo = ['a']
+call add(foo, 'b') | " after that: ['a', 'b']
+echo len(foo) | " 2
+echo get(foo, 0, 'default') | " 'a'
+echo get(foo, 100, 'default') | " 'default'
+echo index(foo, 'b') | " 1
+echo index(foo, 'nope') | " -1
+echo join(foo) | " 'a b'
+echo join(foo, '---') | " 'a---b'
+call reverse(foo) | " after that: ['b', 'a']
+
+
+
+" ############
+" Dictionaries
+" ############
 
 " An UNORDERED sequence of key-value pairs, keys are always STRINGS (numbers
 " are implicitly converted to strings).
 
+echo  {'a': 1, 'b': 2, }       | " Trailing comma permitted
 echo  {'a': 1, 'b': 2}.a
 " Syntactic sugar for simple keys
 echo  {'a': 1, 'b': 2}['a']
 
-" VARIABLES
+
+
+" #########
+" TODO Variables
+" #########
 
 " `let`, `const`
 " let g:my_var = 1        | " Global variable"
@@ -94,14 +145,17 @@ let [mother, father; children] = ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
 
 
 
-" LOOPS
+" #####
+" Loops
+" #####
 
-" Iterate over a nested list by unpacking it
+for person in ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
+endfor
+
 for [x, y] in [[1, 0], [0, 1], [-1, 0], [0, -1]]
   " echo 'Position: x ='  .. x .. ', y = ' .. y
 endfor
 
-" Iterate over a range of numbers
 " NOTE [start, end]
 for i in range(10, 0, -1)
 endfor
@@ -117,16 +171,18 @@ endfor
 
 
 
-" EXCEPTION HANDLING
+" ##########
+" Exceptions
+" ##########
 
-" throw "Wrong arguments"
-
-" Guard against an exception (the second catch matches any exception)
+" Throw new exceptions as strings, catch them by pattern-matching a regular
+" expression against the string
 
 try
   source path/to/file
 catch /Cannot open/
   echo 'Looks like that file does not exist'
+" The second catch matches any exception
 catch /.*/
   echo 'Something went wrong, but I do not know what'
 finally
