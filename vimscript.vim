@@ -84,7 +84,12 @@ echo  'Hellö'[4]           | " Returns a byte, not the character 'ö'
 " An ordered zero-indexed heterogeneous sequence of arbitrary Vim script
 " objects.
 
+let original = ['zero', 1, {'2': 2}]
+let changed = original
+let original[1] = 228 | " NOTE assignment by reference
+echo original changed
 echo [1, 2] + [2, 4]
+
 " NOTE [start : end] - all boundaries included!
 " Shallow copy of entire list
 echo [1, 2, 3, 4][:]
@@ -103,22 +108,24 @@ echo [1, 2, 3] == ['1', 2, 3]
 
 " LIST FUNCTIONS {{{
 
-let foo = ['a']
-call add(foo, 'b')
-echo foo
-call insert(foo, 'c')
-echo foo
-call extend(foo, [1, 2, 3], 1)
-echo foo
-echo len(foo)
-echo get(foo, 1, 'default')
-echo get(foo, 100, 'default')
-echo index(foo, 'b')
-echo index(foo, 'nope')
-echo join(foo)
-echo join(foo, '---')
-call reverse(foo)
-echo foo
+let list = ['a']
+call add(list, 'b')
+echo list
+call insert(list, 'c')
+echo list
+call extend(list, [1, 2, 3], 1)
+echo list
+call remove(list, 3)
+echo list
+echo len(list)
+echo get(list, 1, 'default')
+echo get(list, 100, 'default')
+echo index(list, 'b')
+echo index(list, 'nope')
+echo join(list)
+echo join(list, '---')
+call reverse(list)
+echo list
 
 " }}}
 
@@ -172,7 +179,8 @@ let s:isNumber = {x -> type(x) == type(0)}   | " Local: any name allowed
 " Assign values of list to multiple variables (number of items must match)
 let [x, y] = [1, 2]
 " Assign the remainer to a rest variable
-let [mother, father; children] = ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
+let [mother, father; blah] = ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
+echo mother father blah
 
 " }}}
 
