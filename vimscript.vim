@@ -108,7 +108,7 @@ call add(foo, 'b')
 echo foo
 call insert(foo, 'c')
 echo foo
-call extend(foo, [1, 2, 3]) | " TODO
+call extend(foo, [1, 2, 3], 1)
 echo foo
 echo len(foo)
 echo get(foo, 1, 'default')
