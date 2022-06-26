@@ -154,6 +154,7 @@ function! Variables()
   " let t:my_var = 1        | " Local to current tab page
   let kek = 123
   let kek += 1
+  echo kek
   echo exists('kek') | " 1
   unlet kek
   echo exists('kek') | " 0
