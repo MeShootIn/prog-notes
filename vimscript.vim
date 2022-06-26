@@ -2,6 +2,19 @@
 " https://youtu.be/cbIRLNzrKgg
 
 
+" call Introduction()
+" call Booleans()
+" call Strings()
+" call Lists()
+" call ListFunctions()
+" call Dictionaries()
+call Variables()
+" call Loops()
+" call ImplicitTypeConversions()
+" call Exceptions()
+" call Functions()
+
+
 
 " INTRODUCTION {{{
 
@@ -9,8 +22,14 @@ function! Introduction()
   echo 'Hello, ' | echo 'World!'
   echo 'Hello
         \ world'
+  " All colors: `:highlight`
+  " Custom colors: https://youtu.be/HNiqJKtvZJA?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
+  echohl IncSearch
   echo [1,
         \ 2]
+  echohl None
+  echon 'With prev line'
+  echomsg 'This will be in the messages history (:messages)'
 endfunction
 
 " }}}
@@ -134,11 +153,13 @@ function! Variables()
   " let w:my_var = 1        | " Local to current window
   " let t:my_var = 1        | " Local to current tab page
   let kek = 123
+  let kek += 1
+  echo exists('kek') | " 1
   unlet kek
+  echo exists('kek') | " 0
 
-  " The Vim scope is read-only
-  " echo  v:true            | " Special built-in Vim variables (|v:var|)"
-  " echo  g:                | " All `g` (or `b`, `w`, `t`, `l`, `s`, `a`) vars"
+  " echo  v:true            | " Special built-in Vim vread-only ariables
+  " echo  g:                | " All `g` (or `b`, `w`, `t`, `l`, `s`, `a`) vars
 
   " Access special Vim memory like variables:
   " let @a = 'Hello'        | " Register
@@ -187,7 +208,7 @@ endfunction
 " }}}
 
 
-" REGULAR EXCEPTIONS {{{
+" REGULAR EXPRESSIONS {{{
 
 " A regular expression pattern can be a string.
 " Substitute 'arbidol' for 'arbidol':
@@ -229,7 +250,7 @@ endfunction
 " }}}
 
 
-" Functions {{{
+" FUNCTIONS {{{
 
 function! Functions()
   echo function('type')                   | " Reference to function `type()`"
