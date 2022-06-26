@@ -1,10 +1,10 @@
 " https://learnxinyminutes.com/docs/vimscript/
+" https://youtu.be/cbIRLNzrKgg
 
 
 
-" ##############
-"  Introduction
-" ##############
+" INTRODUCTION {{{
+
 function! Introduction()
   echo 'Hello, ' | echo 'World!'
   echo 'Hello
@@ -13,11 +13,11 @@ function! Introduction()
         \ 2]
 endfunction
 
+" }}}
 
 
-" ##########
-"  Booleans
-" ##########
+" BOOLEANS {{{
+
 function! Booleans()
   " `v:true` evaluates to 1 or the string 'v:true'
   " `v:false` evaluates to 0 or the string 'v:false'
@@ -32,11 +32,11 @@ function! Booleans()
   " echo x isnot y          | " Instance non-identity (lists and dictionaries)
 endfunction
 
+" }}}
 
 
-" #########
-"  Strings
-" #########
+" STRINGS {{{
+
 function! Strings()
   echo  'Let''s go!'      | " Two single quotes become one quote character"
 
@@ -64,11 +64,11 @@ function! Strings()
   echo  'Hellö'[4]           | " Returns a byte, not the character 'ö'
 endfunction
 
+" }}}
 
 
-" #######
-"  Lists
-" #######
+" LISTS {{{
+
 function! Lists()
   " An ordered zero-indexed heterogeneous sequence of arbitrary Vim script
   " objects.
@@ -86,11 +86,11 @@ function! Lists()
   echo "abcd"[-1] . "abcd"[-2:] | " <=> '' . 'cd'
 endfunction
 
+" }}}
 
 
-" ################
-"  List Functions
-" ################
+" LIST FUNCTIONS {{{
+
 function! ListFunctions()
   let foo = ['a']
   call add(foo, 'b') | " after that: ['a', 'b']
@@ -104,11 +104,11 @@ function! ListFunctions()
   call reverse(foo) | " after that: ['b', 'a']
 endfunction
 
+" }}}
 
 
-" ##############
-"  Dictionaries
-" ##############
+" DICTIONARIES {{{
+
 function! Dictionaries()
   " An UNORDERED sequence of key-value pairs, keys are always STRINGS (numbers
   " are implicitly converted to strings).
@@ -119,11 +119,11 @@ function! Dictionaries()
   echo  {'a': 1, 'b': 2}['a']
 endfunction
 
+" }}}
 
 
-" ###########
-"  Variables
-" ###########
+" VARIABLES {{{
+
 function! Variables()
   " `let`, `const`
   " let g:my_var = 1        | " Global variable
@@ -157,11 +157,11 @@ function! Variables()
   let [mother, father; children] = ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
 endfunction
 
+" }}}
 
 
-" #######
-"  Loops
-" #######
+" LOOPS {{{
+
 function! Loops()
   for person in ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
   endfor
@@ -184,21 +184,20 @@ function! Loops()
   endfor
 endfunction
 
+" }}}
 
 
-" ####################
-"  Regular expression
-" ####################
+" REGULAR EXCEPTIONS {{{
 
 " A regular expression pattern can be a string.
 " Substitute 'arbidol' for 'arbidol':
 " substitute/"/'/
 
+" }}}
 
 
-" ###########################
-"  Implicit type conversions
-" ###########################
+" IMPLICIT TYPE CONVERSIONS {{{
+
 function! ImplicitTypeConversions()
   " A string becomes its numerical value if it can be parsed to a number,
   " otherwise it becomes zero.
@@ -207,11 +206,11 @@ function! ImplicitTypeConversions()
   echo 'kek' + 228 | " 228
 endfunction
 
+" }}}
 
 
-" ############
-"  Exceptions
-" ############
+" EXCEPTIONS {{{
+
 function! Exceptions()
   " Throw only STRINGS. Catch them by pattern-matching a REGULAR EXPRESSION.
 
@@ -227,11 +226,11 @@ function! Exceptions()
   endtry
 endfunction
 
+" }}}
 
 
-" ###########
-"  Functions
-" ###########
+" Functions {{{
+
 function! Functions()
   echo function('type')                   | " Reference to function `type()`"
   " `funcref('type')` will throw an error because the argument must be a
@@ -269,3 +268,5 @@ function! Functions()
   let AddFive = MakeAdder(5)
   echo AddFive(3)               | " Prints 8
 endfunction
+
+" }}}
