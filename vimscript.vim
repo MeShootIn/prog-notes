@@ -3,9 +3,9 @@
 
 
 
-" PRINT {{{
+" ECHO {{{
 
-" https://youtu.be/HNiqJKtvZJA?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
+" https://youtu.be/cg2ShY5cUZc?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
 
 echo 'Hello, ' | echo 'World!'
 echo 'Hello
@@ -18,16 +18,20 @@ echo [1,
 echohl None
 echon 'With prev line'
 echomsg 'This will be in the messages history (:messages)'
+echo 'echo' 'takes' 'multiple' 'arguments' | " NOTE Bad way
 
 " }}}
 
 
+
 " BOOLEANS {{{
+
+" https://youtu.be/X_URPeB2uS8?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
 
 " `v:true` evaluates to 1 or the string 'v:true'
 " `v:false` evaluates to 0 or the string 'v:false'
-echo v:true != v:false | " '1'
-echo v:false | " 'v:false'
+echo v:true != v:false
+echo v:false
 
 if !v:false
   echo "It's true!"
@@ -39,10 +43,13 @@ endif
 " }}}
 
 
+
 " STRINGS {{{
 
-echo  'Let''s go!'      | " Two single quotes become one quote character"
+" https://youtu.be/cbIRLNzrKgg?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
 
+echo  'Let''s go!'      | " NOTE Two single quotes become one quote character
+echo '1' .. '2' . ' - twelve' | " NOTE '..' is more preffered way
 " Strings are compared based on their alphanumerical ordering.
 " Case sensitivity depends on the setting of 'ignorecase'.
 echo 'a' < 'b'
@@ -69,40 +76,52 @@ echo  'Hellö'[4]           | " Returns a byte, not the character 'ö'
 " }}}
 
 
+
 " LISTS {{{
+
+" https://youtu.be/QKxDWzv9iT0?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
 
 " An ordered zero-indexed heterogeneous sequence of arbitrary Vim script
 " objects.
 
 echo [1, 2] + [2, 4]
-" NOTE [start:end] - all boundaries included!
+" NOTE [start : end] - all boundaries included!
 " Shallow copy of entire list
 echo [1, 2, 3, 4][:]
 " All slicing operations create new lists. To modify a list in-place use list
 " functions (|list-functions|) or assign directly to an item.
 " NOTE No error (just print the whole list):
-echo ['a', 'b', 'c', 'd', 'e'][0:100000]
+echo ['a', 'b', 'c', 'd', 'e'][0 : 100000]
 " NOTE You can't use negative bare indices with strings. However, you can use
 " negative indices when slicing strings though!
 echo "abcd"[-1] . "abcd"[-2:] | " <=> '' . 'cd'
+echo [1, 2, 3] == ['1', 2, 3]
 
 " }}}
+
 
 
 " LIST FUNCTIONS {{{
 
 let foo = ['a']
-call add(foo, 'b') | " after that: ['a', 'b']
-echo len(foo) | " 2
-echo get(foo, 0, 'default') | " 'a'
-echo get(foo, 100, 'default') | " 'default'
-echo index(foo, 'b') | " 1
-echo index(foo, 'nope') | " -1
-echo join(foo) | " 'a b'
-echo join(foo, '---') | " 'a---b'
-call reverse(foo) | " after that: ['b', 'a']
+call add(foo, 'b')
+echo foo
+call insert(foo, 'c')
+echo foo
+call extend(foo, [1, 2, 3]) | " TODO
+echo foo
+echo len(foo)
+echo get(foo, 1, 'default')
+echo get(foo, 100, 'default')
+echo index(foo, 'b')
+echo index(foo, 'nope')
+echo join(foo)
+echo join(foo, '---')
+call reverse(foo)
+echo foo
 
 " }}}
+
 
 
 " DICTIONARIES {{{
@@ -118,6 +137,7 @@ echo  {'a': 1, 'b': 2}['a']
 " }}}
 
 
+
 " VARIABLES {{{
 
 " `let`, `const`
@@ -131,9 +151,9 @@ echo  {'a': 1, 'b': 2}['a']
 let kek = 123
 let kek += 1
 echo kek
-echo exists('kek') | " 1
+echo exists('kek')
 unlet kek
-echo exists('kek') | " 0
+echo exists('kek')
 
 " echo  v:true            | " Special built-in Vim vread-only ariables
 " echo  g:                | " All `g` (or `b`, `w`, `t`, `l`, `s`, `a`) vars
@@ -155,6 +175,7 @@ let [x, y] = [1, 2]
 let [mother, father; children] = ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
 
 " }}}
+
 
 
 " LOOPS {{{
@@ -180,6 +201,7 @@ endfor
 " }}}
 
 
+
 " REGULAR EXPRESSIONS {{{
 
 " A regular expression pattern can be a string.
@@ -189,13 +211,14 @@ endfor
 " }}}
 
 
+
 " IMPLICIT TYPE CONVERSIONS {{{
 
 " A string becomes its numerical value if it can be parsed to a number,
 " otherwise it becomes zero.
-echo '1' + 1 | " 2
-echo '1' . 1 | " '11'
-echo 'kek' + 228 | " 228
+echo '1' + 1
+echo '1' . 1
+echo 'kek' + 228
 
 " }}}
 
