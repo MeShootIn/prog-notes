@@ -213,7 +213,7 @@ endfor
 " REGULAR EXPRESSIONS {{{
 
 " A regular expression pattern can be a string.
-" Substitute 'arbidol' for 'arbidol':
+" Substitute `"` for `'`:
 " substitute/"/'/
 
 " }}}
