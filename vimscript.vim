@@ -1,5 +1,6 @@
 " https://learnxinyminutes.com/docs/vimscript/
 " https://www.youtube.com/playlist?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
+" https://youtu.be/7fcJWwl1-SU
 
 
 
@@ -22,8 +23,6 @@ echo 'echo' 'takes' 'multiple' 'arguments' | " NOTE Bad way
 
 " }}}
 
-
-
 " BOOLEANS {{{
 
 " https://youtu.be/X_URPeB2uS8?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
@@ -41,8 +40,6 @@ endif
 " echo x isnot y          | " Instance non-identity (lists and dictionaries)
 
 " }}}
-
-
 
 " STRINGS {{{
 
@@ -75,8 +72,6 @@ echo  'Hellö'[4]           | " Returns a byte, not the character 'ö'
 
 " }}}
 
-
-
 " LISTS {{{
 
 " https://youtu.be/QKxDWzv9iT0?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
@@ -104,8 +99,6 @@ echo [1, 2, 3] == ['1', 2, 3]
 
 " }}}
 
-
-
 " LIST FUNCTIONS {{{
 
 let list = ['a']
@@ -129,8 +122,6 @@ echo list
 
 " }}}
 
-
-
 " DICTIONARIES {{{
 
 " An UNORDERED sequence of key-value pairs, keys are always STRINGS (numbers
@@ -142,8 +133,6 @@ echo  {'a': 1, 'b': 2}.a
 echo  {'a': 1, 'b': 2}['a']
 
 " }}}
-
-
 
 " VARIABLES {{{
 
@@ -184,8 +173,6 @@ echo mother father blah
 
 " }}}
 
-
-
 " LOOPS {{{
 
 
@@ -208,8 +195,6 @@ endfor
 
 " }}}
 
-
-
 " REGULAR EXPRESSIONS {{{
 
 " A regular expression pattern can be a string.
@@ -217,8 +202,6 @@ endfor
 " substitute/"/'/
 
 " }}}
-
-
 
 " IMPLICIT TYPE CONVERSIONS {{{
 
@@ -229,8 +212,6 @@ echo '1' . 1
 echo 'kek' + 228
 
 " }}}
-
-
 
 " EXCEPTIONS {{{
 
@@ -248,8 +229,6 @@ finally
 endtry
 
 " }}}
-
-
 
 " FUNCTIONS {{{
 
