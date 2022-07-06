@@ -1,7 +1,7 @@
 " https://learnxinyminutes.com/docs/vimscript/
 " https://www.youtube.com/playlist?list=PLOe6AggsTaVv_IQsADuzhOzepA_tSAagN
 " https://youtu.be/7fcJWwl1-SU
-
+" INFO :h write-plugin
 
 
 " ECHO {{{
@@ -53,6 +53,7 @@ echo 'a' < 'b'
 " Explicit case-sensitivity is specified by appending '#' (match case) or '?'
 " (ignore case) to the operator. Prefer explicity case sensitivity when
 " writing portable scripts.
+" NOTE Use match/ignore case operators!
 echo  'a' <  'B'         | " True or false depending on 'ignorecase'
 echo  'a' <? 'B'         | " True
 echo  'a' <# 'B'         | " False
@@ -79,7 +80,7 @@ echo  'Hellö'[4]           | " Returns a byte, not the character 'ö'
 " An ordered zero-indexed heterogeneous sequence of arbitrary Vim script
 " objects.
 
-let original = ['zero', 1, {'2': 2}]
+let original = ['zero', 1, { '2': 2 }]
 let changed = original
 let original[1] = 228 | " NOTE assignment by reference
 echo original changed
@@ -127,10 +128,10 @@ echo list
 " An UNORDERED sequence of key-value pairs, keys are always STRINGS (numbers
 " are implicitly converted to strings).
 
-echo  {'a': 1, 'b': 2, }       | " Trailing comma permitted
-echo  {'a': 1, 'b': 2}.a
+echo  { 'a': 1, 'b': 2, }       | " Trailing comma permitted
+echo  { 'a': 1, 'b': 2.a }
 " Syntactic sugar for simple keys
-echo  {'a': 1, 'b': 2}['a']
+echo  { 'a': 1, 'b': 2 }['a']
 
 " }}}
 
@@ -162,14 +163,28 @@ echo exists('kek')
 " let &g:textwidth = 79   | " Global option
 
 " Function reference variables have the same restrictions as function names
-let IsString = {x -> type(x) == type('')}    | " Global: capital letter
-let s:isNumber = {x -> type(x) == type(0)}   | " Local: any name allowed
+let IsString = { x -> type(x) == type('') }    | " Global: capital letter
+let s:isNumber = { x -> type(x) == type(0) }   | " Local: any name allowed
 
 " Assign values of list to multiple variables (number of items must match)
 let [x, y] = [1, 2]
 " Assign the remainer to a rest variable
 let [mother, father; blah] = ['Alice', 'Bob', 'Carol', 'Dennis', 'Emily']
 echo mother father blah
+
+echo type('hello') == v:t_string
+echo type('hello') == type('kek')
+
+" }}}
+
+" IF-ELSE {{{
+
+function! s:pipe_operator(...)
+  if a:0 > 1 | return | endif
+
+  " NOTE Bad way
+  if a:0 == 1 | echo 1 | else | echo '0' | endif
+endfunction
 
 " }}}
 
@@ -184,13 +199,13 @@ endfor
 for i in range(10, 0, -1)
 endfor
 
-for symbol in keys({'π': 3.14, 'e': 2.71})
+for symbol in keys({ 'π': 3.14, 'e': 2.71 })
 endfor
 
-for value in values({'π': 3.14, 'e': 2.71})
+for value in values({ 'π': 3.14, 'e': 2.71 })
 endfor
 
-for [symbol, value] in items({'π': 3.14, 'e': 2.71})
+for [symbol, value] in items({ 'π': 3.14, 'e': 2.71 })
 endfor
 
 " }}}
@@ -236,7 +251,7 @@ echo function('type')                   | " Reference to function `type()`"
 " `funcref('type')` will throw an error because the argument must be a
 " user-defined function.
 " echo funcref('type')                    | " Reference by identity, not name"
-echo  {x -> x * x}                       | " Anonymous function"
+echo  { x -> x * x }                       | " Anonymous function"
 echo  function('substitute', ['hello'])  | " Partial function"
 
 " " Range functions define two implicit arguments, which will be set to the range
