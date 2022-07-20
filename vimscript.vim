@@ -251,16 +251,16 @@ echo function('type')                   | " Reference to function `type()`"
 " `funcref('type')` will throw an error because the argument must be a
 " user-defined function.
 " echo funcref('type')                    | " Reference by identity, not name"
-echo  { x -> x * x }                       | " Anonymous function"
-echo  function('substitute', ['hello'])  | " Partial function"
+echo { x -> x * x }                       | " Anonymous function"
+echo function('substitute', ['hello'])  | " Partial function"
 
-" " Range functions define two implicit arguments, which will be set to the range
-" " of the ex-command
-" function! FirstAndLastLine() range
-"     echo [a:firstline, a:lastline]
-" endfunction
-"
-" " Prints the first and last line that match a pattern (|cmdline-ranges|)
+" Range functions define two implicit arguments, which will be set to the range
+" of the ex-command
+function! FirstAndLastLine() range
+  echo [a:firstline, a:lastline]
+endfunction
+
+" Prints the first and last line that match a pattern (|cmdline-ranges|)
 " /^#!/,/!#$/call FirstAndLastLine()
 
 " NOTE If you do not specify an abortion command, the function will continue
