@@ -338,6 +338,13 @@ imap – для insert режима
 vmap - для visual режима
 БИНДЫ
 
+<< 'FOLDING'
+zr - +1 уровень
+zR - развернуть всё
+zm - -1 уровень
+zM - свернуть всё
+FOLDING
+
 << 'ПЕРЕМЕННЫЕ'
 ft - тип текущего файла, окна (TelescopePrompt, spectre_panel)
 ПЕРЕМЕННЫЕ
