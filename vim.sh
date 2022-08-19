@@ -191,6 +191,7 @@ ft - тип текущего файла, окна (TelescopePrompt, spectre_pane
   [[ , ]] - по секциям
   [s, ]s - по грамматическим ошибкам
   % - к парной скобке
+  o (visual) - переместиться к противоположной строке выделения
 Совсем крупно:
   gf - переход к файлу под курсором (в начале обязательно должны быть `./`)
   gv - перейти + произвести последнее выделение
@@ -339,10 +340,17 @@ vmap - для visual режима
 БИНДЫ
 
 << 'FOLDING'
-zr - +1 уровень
+zr - +foldlevel (reduce)
+zm - -foldlevel (more)
 zR - развернуть всё
-zm - -1 уровень
 zM - свернуть всё
+zo - развернуть текущий фолдинг (open)
+zO - развернуть текущие фолдинги рекурсивно
+zc - свернуть текущий фолдинг (close)
+zC - свернуть текущие фолдинги рекурсивно
+# TODO
+zv - view cursor line A.K.A. "open just enough folds to make cursor line visible" (mnemonic: view/visible)
+zi - toggle value of 'foldenable' (mnemonic: invert)
 FOLDING
 
 << 'ПЕРЕМЕННЫЕ'
