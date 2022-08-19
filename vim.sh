@@ -340,6 +340,8 @@ vmap - для visual режима
 БИНДЫ
 
 << 'FOLDING'
+zf - создать фолд для выделенной области
+zd - удалить фолд под курсором
 zr - +foldlevel (reduce)
 zm - -foldlevel (more)
 zR - развернуть всё
