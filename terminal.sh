@@ -147,10 +147,15 @@ exit # дисконнект
 
 
 # ПРЕДВАРИТЕЛЬНАЯ НАСТРОЙКА
+
 # Замена дефолтного порта:
 vim /etc/ssh/sshd_config # '# Port 22' -> 'Port 1234'
 sudo apt update -y && sudo apt upgrade -y && sudo reboot # обновление и ребут
-# АВТОРИЗАЦИЯ БЕЗ ВВОДЫ ПАРОЛЯ:
+
+# Для цветных подсказок в файле ~/.bashrc раскомментить строку:
+force_color_prompt=yes
+
+# АВТОРИЗАЦИЯ БЕЗ ВВОДЫ ПАРОЛЯ
 
 # 1) создание ключа
 ssh-keygen # генерация ключа
@@ -170,10 +175,10 @@ echo "публичный_ключ" > .ssh/authorized_keys
 
 ssh-add -D # удалит все ключи из текущего активного ssh-agent сеанса
 
-# Для цветных подсказок в файле ~/.bashrc раскомментить строку:
-force_color_prompt=yes
+
 
 ## КОНФИГ ##
+
 # https://linuxize.com/post/using-the-ssh-config-file/#ssh-config-file-structure-and-patterns
 ssh -o "User=root" my-server # юзать стандартный конфиг, переопределив
 # некоторые параметры
