@@ -1,0 +1,60 @@
+% Модификатор - команда стиля, действующая, пока не сказано иное (закончится
+% область видимости или противоположный модификатор).
+
+\documentclass[a4paper,cmcyralt,12pt]{report}
+
+% КОДИРОВКА И ЛОКАЛИЗАЦИЯ
+\usepackage[english,russian]{babel}	% локализация и переносы
+\usepackage[utf8]{inputenc} % кодировка исходного кода (input)
+\usepackage[T2A]{fontenc} % кодировка выходного текста (output)
+
+% GEOMETRY
+\usepackage{geometry}
+\geometry{top = 25mm}
+\geometry{bottom = 30mm}
+\geometry{left = 20mm}
+\geometry{right = 20mm}
+% Есть и другие параметры (не из пакета geometry):
+\linespread{0.7} % междустрочный интервал
+\setlength{\parindent}{3ex} % отступ 1-ой строки абзаца
+\setlength{\parskip}{2mm} % отступ после начала нового абзаца
+% \geometry{paperheight = 297mm}
+
+% КОЛОНТИТУЛЫ
+\usepackage{titleps}
+\newpagestyle{main}{
+  % толщина линии
+  \setheadrule{0.4pt}
+  % \thepage - номер текущей страницы
+  \sethead{лево}{\thepage}{право}
+  \setfootrule{5pt}
+  \setfoot{лево}{центр}{право}
+}
+% С этого момента все страницы, если не сказано иное, имеют данный стиль.
+\pagestyle{main}
+
+% ШРИФТЫ И НАЧЕРТАНИЯ
+\usepackage{soulutf8}
+
+% МАТЕМАТИКА
+\usepackage{mathtext} % русские буквы в формулах
+\usepackage{amsmath,amsfonts} % математические шрифты
+\usepackage{amsthm} % теоремы
+
+% ТЕОРЕМЫ
+\theoremstyle{plain}
+\newtheorem{theorem}{Моя теорема}
+\newtheorem{lemma}{Моя лемма}
+
+% РАЗНОЕ
+\usepackage{cmap} % поиск по pdf
+\usepackage{hyperref} % кликабельные ссылки
+\usepackage{graphicx} % для графики
+\usepackage{lipsum} % Lorem ipsum...
+\usepackage{alltt} % не игнорирует пробелы
+\usepackage{indentfirst} % отступ в начале параграфа
+
+% ARTICLE
+% \title{Название}
+% \author{Имя автора}
+% \date{\today}
