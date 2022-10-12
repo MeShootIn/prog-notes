@@ -45,7 +45,7 @@
 
 Фигурные скобки создают область видимости, в которую можно писать модификаторы:
 {\bfseries \itshape \Large Жирный курсивный большой}, обычный и {\small
-мелкий} текста.
+мелкий} тексты.
 
 \Huge A
 \LARGE A
@@ -70,7 +70,7 @@
 колонтитулы.
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1\textwidth]{./images/geometry.png}
+  \includegraphics[width=1\textwidth]{./images/geometry}
   \caption{geometry}
   \label{figure:geometry}
 \end{figure}
@@ -79,13 +79,39 @@
 % mm (миллиметры), cm (сантиметры), in (дюймы)
 
 % ШРИФТЫ И НАЧЕРТАНИЯ
-\so{пробелы между буквами}
-
-\caps{строчные заменяются на ``маленькие'' заглавные}
-
-\ul{подчёркивание}
-
+\so{пробелы между буквами}\\
+\caps{строчные заменяются на ``маленькие'' заглавные}\\
+\ul{подчёркивание}\\
 \st{перечёркивание}
+
+% Математические шрифты
+% Для известных множеств
+\[
+  x \in \mathbb{N}
+\]
+
+% Жирный (+ прямой)
+\[
+  \mathbf{A}x=b
+\]
+
+% Прямой
+\[
+  \mathrm{F}(x)=x^2
+\]
+
+% Без усечек
+\[
+  \mathsf{E}\xi < +\infty
+\]
+
+% Каллиграфический
+\[
+  \mathcal{L}(x)=2x
+\]
+
+% ПРЕДЕЛЫ
+% TODO https://youtu.be/7dkmvnC8eSU?list=PL4_hYwCyhAvZtx63FR9d5_K0GMWF1XUc6&t=3802
 
 % ОТСТУПЫ
 
@@ -95,18 +121,83 @@
 \vspace{2cm}
 И по вертикали (сверху) в 2 см
 
-Верх
-
-левый край правый край
-
-% FIXME 
+% FIXME
+% Верх
+% левый край \hskip правый край
 % \vskip
-
-Низ
+% Низ
 
 \newpage
 
+% ПЕРЕХОД НА НОВУЮ СТРОКУ
+
+% Пустая строка (более читабельно) и \par - переход на новый абзац с красной
+% строки (несколько подряд схлопываются)
+
+% \\ и \newline - насильственный переход на новую строку (аналог для страниц -
+% \newpage)
+
+% \linebreak - переход на новую строку без нарушения форматирования; LaTeX сам
+% вычисляет наиболее оптимальное место для переноса, что полезно при длинных
+% теоремах (аналог для страниц - \pagebreak)
+
+% ТАБЛИЦЫ
+
+\begin{tabular}{||c|c|||r|l||}
+  \hline % горизонтальная линия
+  выравнивание & по центру & по правому & и левому краям \\
+  \hline
+  1 & 2 & 3 & 4 \\
+  \hline
+\end{tabular}
+Таблица - строчное окружение => надо отделять новой строкой
+
+А эта строка уже не склеивается с таблицей
+
+% КАСТОМНЫЕ КОМАНДЫ
+
+\[
+  \forall x, y \in \R: df(x, y) = \deriv{f}{x}(x, y)dx + \deriv{f}{y}(x, y)dy
+\]
+
+Теперь мы имеем $ \phi $ и $ \epsilon $ с привычными очертаниями.
+
+\[
+  \Kerr \phi = \epsilon
+\]
+
+\[
+  \argmax_{x \in \R}f(x) = +\infty
+\]
+
+\[
+  5 \rem 2 = 1
+\]
+
+% СПИСКИ
+
+\begin{itemize}
+  \item Маркированный
+  \item список
+\end{itemize}
+
+\begin{enumerate}
+  \item первый пункт
+  \item второй
+\end{enumerate}
+
+\begin{itemize}
+  \item[$ \Leftarrow $] доказательство в одну сторону
+  \item[$ \Rightarrow $] и в другую
+\end{itemize}
+
+% КАСТОМНЫЕ ОКРУЖЕНИЯ
+\begin{centerbf}
+  centerbf
+\end{centerbf}
+
 % ТЕОРЕМЫ
+% TODO https://youtu.be/7dkmvnC8eSU?list=PL4_hYwCyhAvZtx63FR9d5_K0GMWF1XUc6&t=3134
 
 Теоремы (./preamble.tex):
 \begin{lemma}[Моя лемма]
@@ -141,23 +232,13 @@
   д.ф.-м.н. Басов Н.Г.
 \end{alltt}
 
-\begin{itemize}
-  \item Маркированный
-  \item список
-\end{itemize}
-
-\begin{enumerate}
-  \item первый пункт
-  \item второй
-\end{enumerate}
-
 \lipsum[3]\\
 \lipsum[2]
 
 % [h!] говорит о том, что мы хотим картинку ИМЕННО в этом месте
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=1\textwidth]{./images/screw.eps}
+  \includegraphics[width=1\textwidth]{./images/screw}
   \caption{Винт}
   \label{figure:screw}
 \end{figure}
@@ -168,7 +249,7 @@
 
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=0.1\textwidth]{./images/four_screws.eps}
+  \includegraphics[width=0.1\textwidth]{./images/four_screws}
   \caption{4 винта}
   \label{figure:four_screws}
 \end{figure}

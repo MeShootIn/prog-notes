@@ -54,6 +54,28 @@
 \usepackage{alltt} % не игнорирует пробелы
 \usepackage{indentfirst} % отступ в начале параграфа
 
+% КАСТОМНЫЕ КОМАНДЫ
+% Новая команды с уникальным именем:
+\newcommand{\deriv}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand{\R}{\mathbb{R}}
+% Переопределение команд (полезно для некоторых греческих букв с непривычными
+% очертаниями):
+\renewcommand{\phi}{\varphi}
+\renewcommand{\epsilon}{\varepsilon}
+% Математические операторы (внутри формулы печатаются без курсива и ставят
+% пробел перед операндом):
+\DeclareMathOperator{\Kerr}{Ker} % так как \Ker может быть занято
+% Со "*" создаёт оператор, верхних и нижний индексы которого будут являться
+% переделами:
+% WARN Не работает для внутристрочных формул!
+\DeclareMathOperator*{\argmax}{argmax}
+% Бинарные операторы (контролирует расстановку пробелов между операндами):
+\newcommand{\rem}{\mathbin{\%}}
+
+% КАСТОМНЫЕ ОКРУЖЕНИЯ
+% Имя, что идёт перед содержимым и после:
+\newenvironment{centerbf}{\begin{center}\bfseries}{\end{center}}
+
 % ARTICLE
 % \title{Название}
 % \author{Имя автора}
