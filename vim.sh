@@ -389,3 +389,10 @@ q/ (или q?) - ... историю поиска ...
   ^n - следующая (next)
   ^p - предыдущая (previous)
 АВТОКОМПЛИТ
+
+<< 'СЕССИИ'
+:mksession ./my-session.vim - сохранить текущую сессию (табы, сплиты, складки, ...)
+nvim -S ./my-session.vim ИЛИ :source ./my-session.vim - загрузить
+v:this_session - путь до файла с сессией
+SessionLoadPost - событие загрузки сессии
+СЕССИИ
