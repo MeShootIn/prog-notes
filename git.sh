@@ -74,6 +74,22 @@ git show
 
 
 
+### DIFF ###
+
+# TODO HEAD~{N}
+git diff --name-status [<base_commit_id> [<compare_commit_id>]] # --name-only +
+# флаги изменений
+
+# Флаги:
+# M (modified)
+# C (copy-edit) - скопирован + M
+# R (rename-edit) - переименован + M
+# A (added)
+# D (deleted)
+# U (unmerged) - имеются конфликты после merge
+
+
+
 ### ЛОГИ ###
 
 git log [--oneline] # q для выхода
@@ -87,6 +103,9 @@ git checkout <commit_id>
 git checkout [-f] <branch_name> # перейти на ветку с предупреждением о возможной
 # потере незакоммиченных изменений [с удалением всех изменений]
 git checkout -f # удалить все текущие изменения
+
+# Разница в файлах:
+git log --name-status --oneline # --name-only + флаги изменений
 
 
 
