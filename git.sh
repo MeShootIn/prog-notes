@@ -59,10 +59,10 @@ git push -u origin master # push + устанавливает удалённый
 git config core.fileMode false # => файловая система не поддерживает отдельное
 # право на выполнение
 
-git update-index --chmod+=x file.ext # для Windows: принудительно добавляет для
+git update-index --chmod=+x file.ext # для Windows: принудительно добавляет для
 # ПРОИНДЕКСИРОВАННОГО файла право на исполнение в обход файловой системы
 # (хороший тон)
-git add --chmod+=x file.ext # аналогично выше, но для НЕпроиндексированного
+git add --chmod=+x file.ext # аналогично выше, но для НЕпроиндексированного
 
 
 
