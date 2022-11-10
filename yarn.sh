@@ -7,20 +7,20 @@
 # позволяющий юзать разные версии yarn (аналогично nvm для версий Node.js)) для
 # Node.js >= 16.10 версии.
 corepack enable # включить Corepack
-corepack prepare yarn@stable --activate
+corepack prepare yarn@(stable / latest / 1.22.19) --activate
 
 # Обновление yarn.
 # NOTE После обновы надо запустить установку (yarn install) для
 # каждого проекта заново.
 
-yarn set version (stable / latest / from sources)
+yarn set version (stable / latest / from sources / 1.22.19)
 
 
 
 ### ОБЩИЕ ###
 
-yarn [--version/-v] # версия самого yarn
-yarn [--help/-h]
+yarn [--version / -v] # версия самого yarn
+yarn [--help / -h]
 
 
 
@@ -34,7 +34,7 @@ yarn [--help/-h]
 # Если поле "private" !== true (т.е. пустое), то приватный ключ не будет
 # добавлен в "package.json".
 
-yarn init [--yes/-y] [--private/-p] # [всё по умолчанию] ["private": true]
+yarn init [--yes / -y] [--private / -p] # [всё по умолчанию] ["private": true]
 
 
 
@@ -60,6 +60,7 @@ yarn config set init-license "GPL-3.0" -g
 # INFO https://yarnpkg.com/cli/config
 
 
+
 ### УПРАВЛЕНИЕ ЗАВИСИМОСТЯМИ ###
 
 # Установка всех зависимостей в проекте.
@@ -71,5 +72,5 @@ yarn # <=> yarn install
 yarn (add / up / remove) <package>
 yarn (add / up) (<package>@<version> / <package>@<tag>)
 
-# Добавление в определённую категорию завесимостей.
+# Добавление в определённую категорию зависимостей.
 yarn add <package> (--dev / --peer) # devDependencies / peerDependencies
