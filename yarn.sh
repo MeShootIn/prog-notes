@@ -10,8 +10,8 @@ corepack enable # включить Corepack
 corepack prepare yarn@(stable / latest / 1.22.19) --activate
 
 # Обновление yarn.
-# NOTE После обновы надо запустить установку (yarn install) для
-# каждого проекта заново.
+# NOTE После обновы надо запустить установку (yarn install) для каждого проекта
+# заново.
 
 yarn set version (stable / latest / from sources / 1.22.19)
 
