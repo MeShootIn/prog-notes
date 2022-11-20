@@ -19,7 +19,7 @@ yarn set version (stable / latest / from sources / 1.22.19)
 
 ### ОБЩИЕ ###
 
-yarn [--version / -v] # версия самого yarn
+yarn [--version / -v] # версия yarn
 yarn [--help / -h]
 
 
@@ -69,8 +69,8 @@ yarn # <=> yarn install
 # FIXME https://yarnpkg.com/cli/add
 
 # Добавление, обновление и удаление.
-yarn (add / up / remove) <package>
-yarn (add / up) (<package>@<version> / <package>@<tag>)
+yarn [global] (add / up / remove) <package>
+yarn [global] (add / up) (<package>@<version> / <package>@<tag>)
 
 # Добавление в определённую категорию зависимостей.
-yarn add <package> (--dev / --peer) # devDependencies / peerDependencies
+yarn [global] add <package> (--dev / --peer) # devDependencies / peerDependencies
