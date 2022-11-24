@@ -391,7 +391,7 @@ q/ (или q?) - ... историю поиска ...
 АВТОКОМПЛИТ
 
 << 'СЕССИИ'
-:mksession ./my-session.vim - сохранить текущую сессию (табы, сплиты, складки, ...)
+:mksession ./my-session.vim - сохранить текущую сессию (табы, сплиты, ...)
 nvim -S ./my-session.vim ИЛИ :source ./my-session.vim - загрузить
 v:this_session - путь до файла с сессией
 SessionLoadPost - событие загрузки сессии
