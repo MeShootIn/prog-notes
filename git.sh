@@ -28,13 +28,13 @@ git status
 git add .  # только текущая папка
 git add -a # только проиндексированные файлы
 git add -A # абсолютно все файлы
-git add -p file.txt # добавление в индекс определённых фрагментов из файла
-git commit -m 'add all files'
+git add -p -- <file>... # добавление в индекс определённых фрагментов из файла
+git commit -m 'Add all files'
 git commit -am 'message' # как git add, но только для изменённых или удалённых
 # файлов + коммит
 git commit --allow-empty -m 'empty commit'
 git commit --allow-empty-message -m '' # пустое сообщение
-git commit -m 'Updated `composer.json` file' # или git commit -m "Updated
+git commit -m 'Update `composer.json` file' # или git commit -m "Update
 # \`composer.json\` file", иначе обратные кавычки будут запускать прогу в Linux
 git tag 1.2.3 # помечает текущий коммит версией (тегом) 1.2.3
 # можно делать несколько тегов на 1 коммит, но так, чтобы они не повторялись
@@ -50,7 +50,7 @@ git push -u origin master # push + устанавливает удалённый
 
 ### ПРАВА НА ФАЙЛЫ ###
 
-# В логе операции (например, git add -A => "create mode 100644 file.ext") перед
+# В логе операции (например, git add -A => "create mode 100644 <file>") перед
 # именем файла 6-значное число. Пример: 100644 (100 - тип объекта: 100 для
 # файла, др. числа для символических ссылок, папок, ...; 644 - права: ЛИБО 644
 # для неисполнимого (для текущего пользователя), ЛИБО 755 для исполнимого файла
@@ -59,10 +59,10 @@ git push -u origin master # push + устанавливает удалённый
 git config core.fileMode false # => файловая система не поддерживает отдельное
 # право на выполнение
 
-git update-index --chmod=+x file.ext # для Windows: принудительно добавляет для
+git update-index --chmod=+x -- <file>... # для Windows: принудительно добавляет для
 # ПРОИНДЕКСИРОВАННОГО файла право на исполнение в обход файловой системы
 # (хороший тон)
-git add --chmod=+x file.ext # <=> git update-index --add --chmod=+x file.etx
+git add --chmod=+x -- <file> # <=> git update-index --add --chmod=+x <file>
 # (аналогично выше, но для НЕпроиндексированного)
 
 
@@ -70,8 +70,9 @@ git add --chmod=+x file.ext # <=> git update-index --add --chmod=+x file.etx
 ### SHOW ###
 
 # Разница между текущим и предыдующим коммитом + инфа в удобном виде:
-# * (Author/Commit) - имя и email автора (изменений (написанного кода)) / коммита (тот, кто
-# сделал "git commit ...", т.к. у автора изменений может не быть прав);
+# * (Author/Commit) - имя и email автора (изменений (написанного кода)) /
+# коммита (тот, кто сделал "git commit ...", т.к. у автора изменений может не
+# быть прав);
 # * (Author/Commit)Date - дата.
 # NOTE По умолчанию "Author" === "Commit".
 # Существуют переменные окружения: GIT_(AUTHOR/COMMITTER)_(NAME/EMAIL/DATE)
@@ -81,7 +82,8 @@ git show
 
 ### DIFF ###
 
-# TODO HEAD~{N}
+# NOTE Можно указывать через <commit_id>~N, где N - порядковый номер
+# предшествующего коммита (отсчёт с 1) относительно <commit_id>.
 git diff --name-status [<base_commit_id> [<compare_commit_id>]] # --name-only +
 # флаги изменений
 
@@ -98,8 +100,8 @@ git diff --name-status [<base_commit_id> [<compare_commit_id>]] # --name-only +
 ### ЛОГИ ###
 
 git log [--oneline] # q для выхода
-git log --follow file.txt # коммиты, в которых были изменения файла file.txt,
-# даже с учётом переименования
+git log --follow <file> # коммиты, в которых были изменения файла, даже с
+# учётом переименования
 git log --stat # коммиты со статистикой изменений
 git reflog # log + операции (reset, commit, checkout, ...)
 
@@ -116,7 +118,8 @@ git log --name-status --oneline # --name-only + флаги изменений
 
 ### УДАЛЕНИЕ ###
 
-# git rm и git mv - обёртки над командами git + ОС: rm [-r] <file> && git add <file>
+# git rm и git mv - обёртки над командами git + ОС: rm [-r] <file>... && git add
+# <file>...
 #
 # Переименование = удаление физическое ("Changes not staged for commit:
 # deleted: old.ext") + из индекса ("Untracked files: new.ext"). И только
@@ -127,16 +130,15 @@ git log --name-status --oneline # --name-only + флаги изменений
 #
 # NOTE => в большинстве случаев лучше юзать обёртки!
 
-git rm [-r] [-f] unwanted_file # удаление (физическое + из индекса) файла
+git rm [-r] [-f] <file> # удаление (физическое + из индекса) файла
 # [папки] [даже если в нём есть несохранённые изменения]
 git rm [-r] --cached img/logo.png src/script.js # только из индекса (без
 # физического удаления), т.е. переносит в Untracked files
 git mv file.txt dir/kek.txt # переименование (перемещение) файла
-git reset <file> # перемещает файл из "Changes to be committed" в
+git reset -- <file>... # перемещает файл из "Changes to be committed" в
 # "Untracked files" (удаляет из индекса)
 git reset <commit_id> --hard # ОБЯЗАТЕЛЬНО --hard - удаляет все коммиты ВЫШЕ
 # commit_id и ВОЗВРАЩАЕТСЯ к нему
-git restore <file>...
 git push -f # синхронизирует удалённые коммиты с локальными
 
 
@@ -230,6 +232,16 @@ git checkout <commit_with_needed_files> index.html src/kek.js
 # Слияние:
 git merge <branch_name> # текущая ветка мёрджится с <branch_name>
 # (<branch_name> не удаляется)
+
+
+# ВОССТАНОВЛЕНИЕ И ПРОСМОТР ПРЕДЫДУЩИХ ВЕРСИЙ ФАЙЛОВ
+
+git checkout <commit_id> -- <file>... # копирует файлы на момент коммита в
+# текущую рабочую директорию и индекс
+git checkout HEAD -- <file>... # отменяет изменения для файлов (как для
+# добавленных в stage, так и нет => универсальнее `git restore`)
+git show <commit_id>~2:<file> # выводит (подобно `cat`) содержимое файла на
+# момент коммита
 
 
 
