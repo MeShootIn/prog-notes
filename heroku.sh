@@ -1,10 +1,8 @@
 # https://devhints.io/heroku
-# https://devhints.io/heroku
-# https://devhints.io/heroku
-# https://devhints.io/heroku
-# https://devhints.io/heroku
 
-heroku create $APP_NAME --buildpack mars/create-react-app --region eu # при использовать на инициализированном репозитории автоматически подключается remote
+heroku create $APP_NAME --buildpack mars/create-react-app --region eu # при
+# использовании на инициализированном репозитории автоматически подключается
+# remote
 
 heroku buildpacks:set heroku/php
 
