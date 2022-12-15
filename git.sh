@@ -370,7 +370,7 @@ git pull ...
 git status --ignored # добавляет к выводу файлы, попавшие под шаблоны в
 # .gitignore
 
-file.type # файл в любом каталоге / подкаталоге (file.type, img/file.type, ...)
+fvim.wo.fillcharsile.type # файл в любом каталоге / подкаталоге (file.type, img/file.type, ...)
 * # 0..inf символов
 ? # 1 символ
 !file.type # исключение, если подходит под предыдущие шаблоны
