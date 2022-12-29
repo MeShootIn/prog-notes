@@ -1,5 +1,8 @@
 ### УСТАНОВКА И ОБНОВЛЕНИЕ YARN ###
 
+
+# 3.x #
+
 # FIXME Юзается yarn classic => перейти на новую версию:
 # https://yarnpkg.com/getting-started/migration
 
@@ -15,6 +18,8 @@ corepack prepare yarn@(stable / latest / 1.22.19) --activate
 
 yarn set version (stable / latest / from sources / 1.22.19)
 
+# CLASSIC #
+
 
 
 ### ОБЩИЕ ###
@@ -25,8 +30,6 @@ yarn [--help / -h]
 
 
 ### ИНИЦИАЛИЗАЦИЯ ПРОЕКТА ###
-
-# FIXME Вместо ".npmrc" и ".yarnrc" теперь нужен ".yarnrc.yml"?
 
 # Значения по умолчанию должны храниться в "init-*" ключах конфига.
 # Если уже есть файл "package.json", то настоящие значения будут предлагаться по
@@ -74,3 +77,6 @@ yarn [global] (add / up) (<package>@<version> / <package>@<tag>)
 
 # Добавление в определённую категорию зависимостей.
 yarn [global] add <package> (--dev / --peer) # devDependencies / peerDependencies
+
+# Список установленных зависимостей.
+yarn info 
