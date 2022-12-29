@@ -78,5 +78,5 @@ yarn [global] (add / up) (<package>@<version> / <package>@<tag>)
 # Добавление в определённую категорию зависимостей.
 yarn [global] add <package> (--dev / --peer) # devDependencies / peerDependencies
 
-# Список установленных зависимостей.
-yarn info 
+# Список установленных зависимостей в формате: "package@version".
+yarn info --name-only
