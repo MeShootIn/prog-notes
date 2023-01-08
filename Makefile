@@ -30,42 +30,44 @@
 
 
 
-.SILENT: # без вывода выполняемых команд
+# .SILENT: # без вывода выполняемых команд
 
 # Переменные можно также задавать после вызова цели (например, `make run
-# TARGET=prog.exe`).
-TARGET = main.exe
-PREFIX_SRC = ./src/
-PREFIX_OBJ = ./obj/
-MAIN_O = main.o
-SUM_O = sum.o
+# TARGET=prog`).
+TARGET = main
+SRC_DIR = src/
+OBJ_DIR = obj/
+MAIN_O = ${OBJ_DIR}main.o
+SUM_O = ${OBJ_DIR}sum.o
+MAIN_C = ${SRC_DIR}main.c
+SUM_C = ${SRC_DIR}sum.c
 
 # Сначала выполняются кастомные цели (следующие в одной строке после ":"), затем
 # блочные (консольные).
-build: mkdir_obj ${SUM_O} ${MAIN_O}
-	gcc -Wall -o ${TARGET} ${PREFIX_OBJ}${MAIN_O} ${PREFIX_OBJ}${SUM_O}
+${TARGET}: mkdir_obj ${SUM_O} ${MAIN_O}
+	gcc -Wall -o ${TARGET} ${MAIN_O} ${SUM_O}
+
+${MAIN_O}: ${MAIN_C}
+	gcc -Wall -c -o ${MAIN_O} ${MAIN_C}
+
+${SUM_O}: ${SUM_C}
+	gcc -Wall -c -o ${SUM_O} ${SUM_C}
 
 mkdir_obj:
-	mkdir -p ${PREFIX_OBJ}
+	mkdir -p ${OBJ_DIR}
 
-${SUM_O}:
-	gcc -Wall -c ${PREFIX_SRC}sum.c -o ${PREFIX_OBJ}${SUM_O}
-
-${MAIN_O}:
-	gcc -Wall -c ${PREFIX_SRC}main.c -o ${PREFIX_OBJ}${MAIN_O}
-
-build-and-run: build run
+build-and-run: ${TARGET} run
 
 run:
 	./${TARGET}
 
 clean:
 	rm -f ${TARGET}
-	rm -rf ${PREFIX_OBJ}
+	rm -rf ${OBJ_DIR}
 
-# Если бы существовала папка "./build" или "./log", никак не связанная с
-# одноименной целью, то при последующем выполнении `make build` утилита выдала
-# бы "make: `build` is up to date", т.к. make воспринимает её как папку с
-# выполненной задачей "build" (в силу предназначения make). Чтобы этого
-# избежать, надо отвязать задачу от файловой структуры:
-.PHONY: build log
+# Если бы существовала папка "./run" или "./clean", никак не связанная с
+# одноименной целью, то при последующем выполнении `make run` утилита выдала бы
+# "make: `run` is up to date", т.к. make воспринимает её как папку с выполненной
+# задачей "run" (в силу предназначения make). Чтобы этого избежать, надо
+# отвязать задачу от файловой структуры:
+.PHONY: mkdir_obj build-and-run run clean
