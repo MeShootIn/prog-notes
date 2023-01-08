@@ -30,6 +30,13 @@
 
 
 
+# Если бы существовала папка "./run" или "./clean", никак не связанная с
+# одноименной целью, то при последующем выполнении `make run` утилита выдала бы
+# "make: `run` is up to date", т.к. make воспринимает её как папку с выполненной
+# задачей "run" (в силу предназначения make). Чтобы этого избежать, надо
+# отвязать задачу от файловой структуры:
+.PHONY: mkdir_obj build-and-run run clean
+
 # .SILENT: # без вывода выполняемых команд
 
 # Переменные можно также задавать после вызова цели (например, `make run
@@ -37,37 +44,30 @@
 TARGET = main
 SRC_DIR = src/
 OBJ_DIR = obj/
-MAIN_O = ${OBJ_DIR}main.o
-SUM_O = ${OBJ_DIR}sum.o
-MAIN_C = ${SRC_DIR}main.c
-SUM_C = ${SRC_DIR}sum.c
+MAIN_O = $(OBJ_DIR)main.o
+SUM_O = $(OBJ_DIR)sum.o
+MAIN_C = $(SRC_DIR)main.c
+SUM_C = $(SRC_DIR)sum.c
 
 # Сначала выполняются кастомные цели (следующие в одной строке после ":"), затем
 # блочные (консольные).
-${TARGET}: mkdir_obj ${SUM_O} ${MAIN_O}
-	gcc -Wall -o ${TARGET} ${MAIN_O} ${SUM_O}
+$(TARGET): mkdir_obj $(SUM_O) $(MAIN_O)
+	gcc -Wall -o $(TARGET) $(MAIN_O) $(SUM_O)
 
-${MAIN_O}: ${MAIN_C}
-	gcc -Wall -c -o ${MAIN_O} ${MAIN_C}
+$(MAIN_O): $(MAIN_C)
+	gcc -Wall -c -o $(MAIN_O) $(MAIN_C)
 
-${SUM_O}: ${SUM_C}
-	gcc -Wall -c -o ${SUM_O} ${SUM_C}
+$(SUM_O): $(SUM_C)
+	gcc -Wall -c -o $(SUM_O) $(SUM_C)
 
 mkdir_obj:
-	mkdir -p ${OBJ_DIR}
+	mkdir -p $(OBJ_DIR)
 
-build-and-run: ${TARGET} run
+build-and-run: $(TARGET) run
 
 run:
-	./${TARGET}
+	./$(TARGET)
 
 clean:
-	rm -f ${TARGET}
-	rm -rf ${OBJ_DIR}
-
-# Если бы существовала папка "./run" или "./clean", никак не связанная с
-# одноименной целью, то при последующем выполнении `make run` утилита выдала бы
-# "make: `run` is up to date", т.к. make воспринимает её как папку с выполненной
-# задачей "run" (в силу предназначения make). Чтобы этого избежать, надо
-# отвязать задачу от файловой структуры:
-.PHONY: mkdir_obj build-and-run run clean
+	rm -f $(TARGET)
+	rm -rf $(OBJ_DIR)
