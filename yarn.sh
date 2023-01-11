@@ -10,13 +10,13 @@
 # позволяющий юзать разные версии yarn (аналогично nvm для версий Node.js)) для
 # Node.js >= 16.10 версии.
 corepack enable # включить Corepack
-corepack prepare yarn@(stable / latest / 1.22.19) --activate
+corepack prepare yarn@(stable / latest / 1.2.3 / classic) --activate
 
 # Обновление yarn.
 # NOTE После обновы надо запустить установку (yarn install) для каждого проекта
 # заново.
 
-yarn set version (stable / latest / from sources / 1.22.19)
+yarn set version (stable / latest / from sources / 1.2.3 / classic)
 
 # CLASSIC #
 
