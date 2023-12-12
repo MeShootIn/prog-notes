@@ -239,7 +239,9 @@ git rm [-r] [-f] <file> # удаление (физическое + из инде
 # [папки] [даже если в нём есть несохранённые изменения]
 git rm [-r] --cached img/logo.png src/script.js # только из индекса (без
 # физического удаления), т.е. переносит в Untracked files
-git mv file.txt dir/kek.txt # переименование (перемещение) файла
+git mv [--dry-run] [--verbose] {<source>, <sources>...} <destination> # [только
+# показать будущий результат] [с выводом результатов] {переименование одного
+# объекта / перемещение нескольких объектов в папку}
 git reset -- <file>... # перемещает файл из "Changes to be committed" в
 # "Untracked files" (удаляет из индекса)
 git reset <commit_id> --hard # ОБЯЗАТЕЛЬНО --hard - удаляет все коммиты ВЫШЕ
