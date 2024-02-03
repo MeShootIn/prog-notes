@@ -69,7 +69,7 @@ echo  "hi" !~? "hello"    | " Regular expression unmatch, case insensitive
 echo 'Hello'[1:-2]
 " An ordered zero-indexed sequence of bytes. The encoding of text into bytes
 " depends on the option |'encoding'|.
-echo  'Hellö'[4]           | " Returns a byte, not the character 'ö'
+echo 'Hellö'[4]           | " Returns a byte, not the character 'ö'
 
 " }}}
 
